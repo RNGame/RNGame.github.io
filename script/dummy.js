@@ -3,51 +3,65 @@ const gamesize = 800;
 const height = gamesize;
 const width = gamesize;
 
-const earthsize = gamesize / 10;
-
-let radius;
-let meteors = [];
-
 function setup(){
     createCanvas(width, height);
     stroke(255);
-    frameRate(1);
+    frameRate(60);
+    noCursor();
 
-    radius = sqrt(pow(width/2, 2) + pow(height/2, 2));
-
-    
 }
 
 function draw(){
-    background("#090909");
-
-    fill("#0080c0");
-    ellipse(width/2, height/2, earthsize);
-
-    meteors.push(meteor());
-    meteors.forEach(x => {
-        x.draw();
-    });
+    background(0);
+    pointer();
 }
 
-function meteor(){
-    const angle = random(PI * 2); //random winkel
+function pointer() {
+    push();
 
-    return new Meteor(radius, angle, width/2, height/2);
+    translate(mouseX, mouseY);
+    noStroke();
+    fill(255);
+
+    rotate(pointerRotation());
+    playerShape();
+    
+    pop();
 }
 
-class Meteor{
-    constructor(radius, angle, earthX, earthY){
-        this.meteorX = radius * cos(angle) + earthX;
-        this.meteorY = radius * sin(angle) + earthY;
+let oldAngle;
+function pointerRotation(){
+    let x = mouseX - pmouseX;
+    let y = mouseY - pmouseY;
 
-        this.earthX = earthX;
-        this.earthY = earthY;
+    let c = sqrt(pow(x, 2) + pow(y, 2));
+
+    if(x === 0 && y === 0){
+        return oldAngle;
+    }
+    
+    let angleX = acos(x/c);
+
+    if(mouseY < pmouseY){
+        angleX = -angleX;
     }
 
-    draw(){
-        line(this.meteorX, this.meteorY, this.earthX, this.earthY);
-    }
+    oldAngle = angleX;
+    return angleX;
 }
+
+function playerShape() {
+    //pointy boi
+    // beginShape();
+    // vertex(10, 0);
+    // vertex(-5, 5);
+    // vertex(-5, -5);
+    // endShape(CLOSE);
+
+    //pacman boi
+    let mouthangle = PI/5;
+    arc(0, 0, gamesize/20, gamesize/20, mouthangle, -mouthangle);
+}
+
 
 
