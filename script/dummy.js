@@ -34,20 +34,12 @@ function pointerRotation(){
     let x = mouseX - pmouseX;
     let y = mouseY - pmouseY;
 
-    let c = sqrt(pow(x, 2) + pow(y, 2));
-
     if(x === 0 && y === 0){
         return oldAngle;
     }
-    
-    let angleX = acos(x/c);
 
-    if(mouseY < pmouseY){
-        angleX = -angleX;
-    }
-
-    oldAngle = angleX;
-    return angleX;
+    oldAngle = atan2(y, x);;
+    return oldAngle;
 }
 
 function playerShape() {
