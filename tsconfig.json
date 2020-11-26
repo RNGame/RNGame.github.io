@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "mapRoot": "./src/",
+      "module": "ES2020",
+      "noImplicitAny": true,
+      "outDir": "dist",
+      "preserveConstEnums": true,
+      "removeComments": true,
+      "rootDir": "./src/",
+      "sourceMap": true,
+      "sourceRoot": "./src/",
+      "target": "es2020"
+    }
+  }
