@@ -52,4 +52,4 @@ function playerShape() {
     let mouthangle = PI / 5;
     arc(0, 0, gamesize / 20, gamesize / 20, mouthangle, -mouthangle);
 }
-//# sourceMappingURL=../src/src/dummy.js.map
+//# sourceMappingURL=../src/src/main.js.map
