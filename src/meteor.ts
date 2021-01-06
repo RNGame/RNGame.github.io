@@ -1,0 +1,9 @@
+class Meteor {
+    constructor() {
+
+    }
+
+    draw() {
+        
+    }
+}
