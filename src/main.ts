@@ -7,6 +7,8 @@ const earthSize = 256;
 const earth = new Earth(earthSize);
 let player: Player;
 let meteors: Meteor[];
+let stars: Star[];
+let impacts: Impact[];
 
 let sound_nom: p5.SoundFile;
 let sound_oof: p5.SoundFile; 
@@ -28,6 +30,8 @@ function setup() {
     
     player = new Player(gamesize);
     meteors = [];
+    stars = [];
+    impacts = [];
 }
 
 function windowResized() {
@@ -46,13 +50,27 @@ function draw() {
     
     meteors.push(new Meteor(gamesize+gamesize/2, random(PI * 2), width, height, earthSize, 50));
     meteors.forEach(meteor => {
-        if(meteor.stateImpact || meteor.stateEaten){
+        if(meteor.stateImpact){
             removeMeteor(meteor);
+            impacts.push(new Impact(meteor.posX, meteor.posY, meteor.meteorSize*2));
+        } 
+        if(meteor.stateEaten){
+            removeMeteor(meteor);
+            stars.push(new Star(meteor.posX, meteor.posY));
         }
-            
+
         meteor.draw();
-        
     });
 
-    console.log(meteors.length);
+    stars.forEach(star => star.draw());
+
+    impacts.forEach(impact => {
+        if(impact.stateFinished){
+            let idx = impacts.indexOf(impact);
+            impacts.splice(idx, 1);
+            return;
+        }
+
+        impact.draw();
+    });
 }

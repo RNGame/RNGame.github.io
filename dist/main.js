@@ -4,6 +4,8 @@ const earthSize = 256;
 const earth = new Earth(earthSize);
 let player;
 let meteors;
+let stars;
+let impacts;
 let sound_nom;
 let sound_oof;
 function preload() {
@@ -21,6 +23,8 @@ function setup() {
     noCursor();
     player = new Player(gamesize);
     meteors = [];
+    stars = [];
+    impacts = [];
 }
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
@@ -35,11 +39,24 @@ function draw() {
     player.draw();
     meteors.push(new Meteor(gamesize + gamesize / 2, random(PI * 2), width, height, earthSize, 50));
     meteors.forEach(meteor => {
-        if (meteor.stateImpact || meteor.stateEaten) {
+        if (meteor.stateImpact) {
             removeMeteor(meteor);
+            impacts.push(new Impact(meteor.posX, meteor.posY, meteor.meteorSize * 2));
+        }
+        if (meteor.stateEaten) {
+            removeMeteor(meteor);
+            stars.push(new Star(meteor.posX, meteor.posY));
         }
         meteor.draw();
     });
-    console.log(meteors.length);
+    stars.forEach(star => star.draw());
+    impacts.forEach(impact => {
+        if (impact.stateFinished) {
+            let idx = impacts.indexOf(impact);
+            impacts.splice(idx, 1);
+            return;
+        }
+        impact.draw();
+    });
 }
 //# sourceMappingURL=../src/src/main.js.map

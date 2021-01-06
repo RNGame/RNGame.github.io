@@ -13,19 +13,11 @@ class Meteor {
         this.factor = 1000;
     }
     draw() {
+        if (this.checkImpact())
+            return;
+        if (this.checkNom())
+            return;
         push();
-        let abstand = Math.sqrt(Math.pow(this.posX - this.earthX, 2) + Math.pow(this.posY - this.earthY, 2));
-        if (abstand <= this.earthsSize) {
-            this.stateImpact = true;
-            this.impact();
-            return;
-        }
-        abstand = Math.sqrt(Math.pow(this.posX - mouseX, 2) + Math.pow(this.posY - mouseY, 2));
-        if (abstand <= this.playerSize) {
-            this.stateEaten = true;
-            this.nom();
-            return;
-        }
         noStroke();
         fill(255, 0, 0);
         ellipseMode(CENTER);
@@ -36,15 +28,23 @@ class Meteor {
         this.posY -= distY / this.factor;
         pop();
     }
-    impact() {
-        sound_oof.play();
-        noStroke();
-        fill(255, 255, 0);
-        ellipseMode(CENTER);
-        ellipse(this.posX, this.posY, this.meteorSize * 2);
+    checkImpact() {
+        let abstand = Math.sqrt(Math.pow(this.posX - this.earthX, 2) + Math.pow(this.posY - this.earthY, 2));
+        if (abstand <= this.earthsSize) {
+            this.stateImpact = true;
+            sound_oof.play();
+            return true;
+        }
+        return false;
     }
-    nom() {
-        sound_nom.play();
+    checkNom() {
+        let abstand = Math.sqrt(Math.pow(this.posX - mouseX, 2) + Math.pow(this.posY - mouseY, 2));
+        if (abstand <= this.playerSize) {
+            this.stateEaten = true;
+            sound_nom.play();
+            return true;
+        }
+        return false;
     }
 }
 //# sourceMappingURL=../src/src/meteor.js.map

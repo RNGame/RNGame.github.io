@@ -37,23 +37,11 @@ class Meteor{
     factor: number;
 
     draw(){
+        if(this.checkImpact()) return;
+        if(this.checkNom()) return;
+
         push();
 
-        let abstand = Math.sqrt(Math.pow(this.posX - this.earthX, 2) + Math.pow(this.posY - this.earthY, 2));
-        if (abstand <= this.earthsSize){
-            this.stateImpact = true;
-            this.impact();
-            return;
-        }
-
-        abstand = Math.sqrt(Math.pow(this.posX - mouseX, 2) + Math.pow(this.posY - mouseY, 2));
-        if (abstand <= this.playerSize){
-            this.stateEaten = true;
-            this.nom();
-            return;
-        }
-
-        
         noStroke();
         fill(255, 0, 0);
         ellipseMode(CENTER);
@@ -64,23 +52,28 @@ class Meteor{
 
         this.posX -= distX / this.factor;
         this.posY -= distY / this.factor;
-        // line(this.startX, this.startY, this.earthX, this.earthY);
 
         pop();
     }
 
-    private impact(){
-        //boom goes the meteor
-        sound_oof.play();
-
-        noStroke();
-        fill(255, 255, 0);
-        ellipseMode(CENTER);
-        ellipse(this.posX, this.posY, this.meteorSize*2);
+    private checkImpact(): boolean{
+        let abstand = Math.sqrt(Math.pow(this.posX - this.earthX, 2) + Math.pow(this.posY - this.earthY, 2));
+        if (abstand <= this.earthsSize){
+            this.stateImpact = true;
+            sound_oof.play();
+            return true;
+        }
+        return false;    
     }
 
-    private nom(){
-        //nom the meteor
-        sound_nom.play();
+    private checkNom(){
+        let abstand = Math.sqrt(Math.pow(this.posX - mouseX, 2) + Math.pow(this.posY - mouseY, 2));
+        if (abstand <= this.playerSize){
+            this.stateEaten = true;
+            sound_nom.play();
+            return true;
+        }
+        return false; 
     }
+
 }
