@@ -21,6 +21,10 @@ function setup() {
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
 }
+async function removeMeteor(meteor) {
+    let idx = meteors.indexOf(meteor);
+    meteors.splice(idx, 1);
+}
 function draw() {
     background(0);
     earth.draw();
@@ -28,13 +32,11 @@ function draw() {
     meteors.push(new Meteor(gamesize + gamesize / 2, random(PI * 2), width, height, earthSize, 20));
     meteors.forEach(meteor => {
         if (meteor.stateImpact) {
-            let idx = meteors.indexOf(meteor);
-            meteors.splice(idx, 1);
+            removeMeteor(meteor);
             return;
         }
         if (meteor.stateEaten) {
-            let idx = meteors.indexOf(meteor);
-            meteors.splice(idx, 1);
+            removeMeteor(meteor);
             return;
         }
         meteor.draw();

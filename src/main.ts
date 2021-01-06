@@ -29,6 +29,11 @@ function windowResized() {
 	resizeCanvas(windowWidth, windowHeight);
 }
 
+async function removeMeteor(meteor: Meteor) {
+	let idx = meteors.indexOf(meteor)
+	meteors.splice(idx, 1)
+}
+
 function draw() {
 	background(0);
 	earth.draw();
@@ -39,16 +44,14 @@ function draw() {
         if(meteor.stateImpact){
             //draw impact animation
 
-            let idx = meteors.indexOf(meteor)
-            meteors.splice(idx, 1)
+            removeMeteor(meteor)
             return;
         } 
 
         if(meteor.stateEaten){
             //play nom sound
 
-            let idx = meteors.indexOf(meteor)
-            meteors.splice(idx, 1)
+            removeMeteor(meteor)
             return;
         }
             
