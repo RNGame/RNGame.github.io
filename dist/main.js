@@ -27,12 +27,7 @@ function draw() {
     player.draw();
     meteors.push(new Meteor(gamesize + gamesize / 2, random(PI * 2), width, height, earthSize, 20));
     meteors.forEach(meteor => {
-        if (meteor.stateImpact) {
-            let idx = meteors.indexOf(meteor);
-            meteors.splice(idx, 1);
-            return;
-        }
-        if (meteor.stateEaten) {
+        if (meteor.stateImpact || meteor.stateEaten) {
             let idx = meteors.indexOf(meteor);
             meteors.splice(idx, 1);
             return;

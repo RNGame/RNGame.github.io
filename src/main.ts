@@ -36,21 +36,11 @@ function draw() {
     
     meteors.push(new Meteor(gamesize+gamesize/2, random(PI * 2), width, height, earthSize, 20));
     meteors.forEach(meteor => {
-        if(meteor.stateImpact){
-            //draw impact animation
-
+        if(meteor.stateImpact || meteor.stateEaten){
             let idx = meteors.indexOf(meteor)
             meteors.splice(idx, 1)
             return;
         } 
-
-        if(meteor.stateEaten){
-            //play nom sound
-
-            let idx = meteors.indexOf(meteor)
-            meteors.splice(idx, 1)
-            return;
-        }
             
         meteor.draw();
         
