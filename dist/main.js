@@ -15,6 +15,9 @@ function setup() {
     frameRate(60);
     noCursor();
 }
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+}
 function draw() {
     background(0);
     drawEarth();
