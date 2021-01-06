@@ -14,6 +14,8 @@ class Meteor{
         this.playerSize = playersize/2;
 
         this.stateImpact = this.stateEaten = false;
+
+        this.factor = 1000;
     }
 
     startX: number;
@@ -32,7 +34,11 @@ class Meteor{
     stateImpact: boolean;
     stateEaten: boolean;
 
+    factor: number;
+    
     draw(){
+        push();
+
         let abstand = Math.sqrt(Math.pow(this.posX - this.earthX, 2) + Math.pow(this.posY - this.earthY, 2));
         if (abstand <= this.earthsSize){
             this.stateImpact = true;
@@ -47,19 +53,17 @@ class Meteor{
             return;
         }
 
-        push();
+        
         noStroke();
         fill(255, 0, 0);
         ellipseMode(CENTER);
         ellipse(this.posX, this.posY, this.meteorSize);
 
-        const factor = 1000;
-
         const distX = this.startX - this.earthX;
         const distY = this.startY - this.earthY;
 
-        this.posX -= distX / factor;
-        this.posY -= distY / factor;
+        this.posX -= distX / this.factor;
+        this.posY -= distY / this.factor;
         // line(this.startX, this.startY, this.earthX, this.earthY);
 
         pop();
@@ -67,9 +71,14 @@ class Meteor{
 
     private impact(){
         //boom goes the meteor
+        noStroke();
+        fill(255, 255, 0);
+        ellipseMode(CENTER);
+        ellipse(this.posX, this.posY, this.meteorSize*2);
     }
 
     private nom(){
         //nom the meteor
+
     }
 }
