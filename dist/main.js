@@ -2,6 +2,7 @@ const gamesize = 800;
 let oldAngle;
 const earthSize = 256;
 const earth = new Earth(earthSize);
+let player;
 function preload() {
     earth.earthImage = loadImage("/res/earth.png");
 }
@@ -13,6 +14,7 @@ function setup() {
     stroke(255);
     frameRate(60);
     noCursor();
+    player = new Player(gamesize);
 }
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
@@ -20,28 +22,6 @@ function windowResized() {
 function draw() {
     background(0);
     earth.draw();
-    pointer();
-}
-function pointer() {
-    push();
-    translate(mouseX, mouseY);
-    noStroke();
-    fill(255);
-    rotate(pointerRotation());
-    playerShape();
-    pop();
-}
-function pointerRotation() {
-    let x = mouseX - pmouseX;
-    let y = mouseY - pmouseY;
-    if (x === 0 && y === 0) {
-        return oldAngle;
-    }
-    oldAngle = atan2(y, x);
-    return oldAngle;
-}
-function playerShape() {
-    let mouthangle = PI / 5;
-    arc(0, 0, gamesize / 20, gamesize / 20, mouthangle, -mouthangle);
+    player.draw();
 }
 //# sourceMappingURL=../src/src/main.js.map
