@@ -6,6 +6,7 @@ const earthSize = 256;
 
 const earth = new Earth(earthSize);
 let player: Player;
+let meteors: Meteor[];
 
 function preload() {
 	earth.earthImage = loadImage("/res/earth.png");
@@ -17,10 +18,11 @@ function setup() {
 	const width = windowWidth;
 	createCanvas(width, height);
 	stroke(255);
-	frameRate(60);
+	frameRate();
     noCursor();
     
     player = new Player(gamesize);
+    meteors = [];
 }
 
 function windowResized() {
@@ -30,5 +32,29 @@ function windowResized() {
 function draw() {
 	background(0);
 	earth.draw();
-	player.draw();
+    player.draw();
+    
+    meteors.push(new Meteor(gamesize+gamesize/2, random(PI * 2), width, height, earthSize, 20));
+    meteors.forEach(meteor => {
+        if(meteor.stateImpact){
+            //draw impact animation
+
+            let idx = meteors.indexOf(meteor)
+            meteors.splice(idx, 1)
+            return;
+        } 
+
+        if(meteor.stateEaten){
+            //play nom sound
+
+            let idx = meteors.indexOf(meteor)
+            meteors.splice(idx, 1)
+            return;
+        }
+            
+        meteor.draw();
+        
+    });
+
+    console.log(meteors.length);
 }
