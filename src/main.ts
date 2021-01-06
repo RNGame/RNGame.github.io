@@ -1,12 +1,13 @@
 const gamesize = 800;
 
 let oldAngle: number;
-let earthImage: p5.Image;
-let earthRotation: number = 0;
+
 const earthSize = 256;
 
+const earth = new Earth(earthSize);
+
 function preload() {
-	earthImage = loadImage("/res/earth.png");
+	earth.earthImage = loadImage("/res/earth.png");
 }
 
 function setup() {
@@ -25,19 +26,8 @@ function windowResized() {
 
 function draw() {
 	background(0);
-	drawEarth();
+	earth.draw()
 	pointer();
-}
-
-function drawEarth() {
-	push();
-	const centerX = width / 2;
-	const centerY = height / 2;
-	translate(centerX, centerY);
-	rotate(earthRotation);
-	image(earthImage, 0, 0, earthSize, earthSize);
-	earthRotation = earthRotation + 0.001;
-	pop();
 }
 
 function pointer() {
