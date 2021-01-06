@@ -35,7 +35,7 @@ class Meteor{
     stateEaten: boolean;
 
     factor: number;
-    
+
     draw(){
         push();
 
@@ -71,6 +71,8 @@ class Meteor{
 
     private impact(){
         //boom goes the meteor
+        sound_oof.play();
+
         noStroke();
         fill(255, 255, 0);
         ellipseMode(CENTER);
@@ -79,6 +81,6 @@ class Meteor{
 
     private nom(){
         //nom the meteor
-
+        sound_nom.play();
     }
 }

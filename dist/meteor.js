@@ -37,12 +37,14 @@ class Meteor {
         pop();
     }
     impact() {
+        sound_oof.play();
         noStroke();
         fill(255, 255, 0);
         ellipseMode(CENTER);
         ellipse(this.posX, this.posY, this.meteorSize * 2);
     }
     nom() {
+        sound_nom.play();
     }
 }
 //# sourceMappingURL=../src/src/meteor.js.map

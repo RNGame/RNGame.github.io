@@ -4,8 +4,12 @@ const earthSize = 256;
 const earth = new Earth(earthSize);
 let player;
 let meteors;
+let sound_nom;
+let sound_oof;
 function preload() {
     earth.earthImage = loadImage("/res/earth.png");
+    sound_nom = new p5.SoundFile("/res/nom.mp3");
+    sound_oof = new p5.SoundFile("/res/oof.mp3");
 }
 function setup() {
     imageMode(CENTER);

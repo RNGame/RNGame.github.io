@@ -8,8 +8,13 @@ const earth = new Earth(earthSize);
 let player: Player;
 let meteors: Meteor[];
 
+let sound_nom: p5.SoundFile;
+let sound_oof: p5.SoundFile; 
+
 function preload() {
-	earth.earthImage = loadImage("/res/earth.png");
+    earth.earthImage = loadImage("/res/earth.png");
+    sound_nom = new p5.SoundFile("/res/nom.mp3");
+    sound_oof = new p5.SoundFile("/res/oof.mp3");
 }
 
 function setup() {
