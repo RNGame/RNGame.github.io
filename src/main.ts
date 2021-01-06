@@ -41,18 +41,8 @@ function draw() {
     
     meteors.push(new Meteor(gamesize+gamesize/2, random(PI * 2), width, height, earthSize, 20));
     meteors.forEach(meteor => {
-        if(meteor.stateImpact){
-            //draw impact animation
-
-            removeMeteor(meteor)
-            return;
-        } 
-
-        if(meteor.stateEaten){
-            //play nom sound
-
-            removeMeteor(meteor)
-            return;
+        if(meteor.stateImpact || meteor.stateEaten){
+            removeMeteor(meteor);
         }
             
         meteor.draw();

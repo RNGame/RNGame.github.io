@@ -31,13 +31,8 @@ function draw() {
     player.draw();
     meteors.push(new Meteor(gamesize + gamesize / 2, random(PI * 2), width, height, earthSize, 20));
     meteors.forEach(meteor => {
-        if (meteor.stateImpact) {
+        if (meteor.stateImpact || meteor.stateEaten) {
             removeMeteor(meteor);
-            return;
-        }
-        if (meteor.stateEaten) {
-            removeMeteor(meteor);
-            return;
         }
         meteor.draw();
     });

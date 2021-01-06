@@ -36,12 +36,14 @@ class Meteor{
         let abstand = Math.sqrt(Math.pow(this.posX - this.earthX, 2) + Math.pow(this.posY - this.earthY, 2));
         if (abstand <= this.earthsSize){
             this.stateImpact = true;
+            this.impact();
             return;
         }
 
         abstand = Math.sqrt(Math.pow(this.posX - mouseX, 2) + Math.pow(this.posY - mouseY, 2));
         if (abstand <= this.playerSize){
             this.stateEaten = true;
+            this.nom();
             return;
         }
 
@@ -63,4 +65,11 @@ class Meteor{
         pop();
     }
 
+    private impact(){
+        //boom goes the meteor
+    }
+
+    private nom(){
+        //nom the meteor
+    }
 }
