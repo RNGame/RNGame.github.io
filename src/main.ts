@@ -4,6 +4,9 @@ let oldAngle: number;
 
 const earthSize = 256;
 
+let meteorsPerSecond = 60;
+const framesPerSecond = 60;
+
 const earth = new Earth(earthSize);
 let player: Player;
 let meteors: Meteor[];
@@ -25,7 +28,7 @@ function setup() {
 	const width = windowWidth;
 	createCanvas(width, height);
 	stroke(255);
-	frameRate();
+	frameRate(framesPerSecond);
     noCursor();
     
     player = new Player(gamesize);
@@ -50,7 +53,11 @@ function draw() {
 
     stars.forEach(star => star.draw());
     
-    meteors.push(new Meteor(gamesize+gamesize/2, random(PI * 2), width, height, earthSize, 50));
+    const shouldSpawnMeteor = frameCount % (framesPerSecond / meteorsPerSecond) === 0
+    if (shouldSpawnMeteor) {
+        meteors.push(new Meteor(gamesize+gamesize/2, random(PI * 2), width, height, earthSize, 50));
+    }
+    
     meteors.forEach(meteor => {
         if(meteor.stateImpact){
             removeMeteor(meteor);
