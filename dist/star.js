@@ -2,7 +2,7 @@ class Star {
     constructor(x, y) {
         this.posX = x;
         this.posY = y;
-        this.width = 10;
+        this.width = 2;
     }
     draw() {
         push();
