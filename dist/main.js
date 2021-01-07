@@ -37,6 +37,7 @@ function draw() {
     background(0);
     earth.draw();
     player.draw();
+    stars.forEach(star => star.draw());
     meteors.push(new Meteor(gamesize + gamesize / 2, random(PI * 2), width, height, earthSize, 50));
     meteors.forEach(meteor => {
         if (meteor.stateImpact) {
@@ -49,7 +50,6 @@ function draw() {
         }
         meteor.draw();
     });
-    stars.forEach(star => star.draw());
     impacts.forEach(impact => {
         if (impact.stateFinished) {
             let idx = impacts.indexOf(impact);
