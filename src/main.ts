@@ -57,6 +57,8 @@ function draw() {
 	background(0);
 	earth.draw();
     player.draw();
+
+    stars.forEach(star => star.draw());
     
     line(0, 0, width/2, height/2);
     
@@ -74,8 +76,6 @@ function draw() {
 
         meteor.draw();
     });
-
-    stars.forEach(star => star.draw());
 
     impacts.forEach(impact => {
         if(impact.stateFinished){
