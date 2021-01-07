@@ -4,8 +4,11 @@ class Meteor {
         this.earthY = height / 2;
         this.startX = radius * cos(angle) + this.earthX;
         this.startY = radius * sin(angle) + this.earthY;
-        this.posX = this.startX;
-        this.posY = this.startY;
+        let schnittpunkt = berechnungstuff(angle, [this.startX, this.startY]);
+        this.posX = schnittpunkt[0];
+        this.posY = schnittpunkt[1];
+        this.startX = schnittpunkt[0];
+        this.startY = schnittpunkt[1];
         this.meteorSize = 25;
         this.earthsSize = earthsize / 2;
         this.playerSize = playersize / 2;
@@ -19,8 +22,10 @@ class Meteor {
             return;
         push();
         noStroke();
-        fill(255, 0, 0);
         ellipseMode(CENTER);
+        fill(255, 255, 0);
+        ellipse(this.startX, this.startY, 20);
+        fill(255, 0, 0);
         ellipse(this.posX, this.posY, this.meteorSize);
         const distX = this.startX - this.earthX;
         const distY = this.startY - this.earthY;
