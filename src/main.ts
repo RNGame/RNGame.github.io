@@ -27,7 +27,7 @@ function setup() {
 	const width = windowWidth;
 	createCanvas(width, height);
 	stroke(255);
-	frameRate();
+	frameRate(60);
     noCursor();
     
     player = new Player(gamesize);
@@ -35,13 +35,7 @@ function setup() {
     stars = [];
     impacts = [];
 
-    // line_intersection([400, 100], [-400, 100], [0, 0], [0, 200]);
-    // let test = new Meteor(800, PI/2, 0, 0, earthSize, 50);
-    // console.log("angle " + test.startX + ", " + test.startY)
-
     eckangle = atan2(height, width);
-    // console.log(degrees(eckangle))
-    // berechnungstuff(radians(270)); 
 }
 
 function windowResized() {
@@ -60,9 +54,6 @@ function draw() {
 
     stars.forEach(star => star.draw());
     
-    line(0, 0, width/2, height/2);
-    
-
     meteors.push(new Meteor(windowWidth+400, random(PI * 2), width, height, earthSize, 50));
     meteors.forEach(meteor => {
         if(meteor.stateImpact){
@@ -88,6 +79,7 @@ function draw() {
     });
 }
 
+//i will refactor this later
 function line_intersection(p1: number[], p2: number[], p3: number[], p4: number[]){
     let xdiff = [p1[0] - p2[0], p3[0] - p4[0]];
     let ydiff = [p1[1] - p2[1], p3[1] - p4[1]];
@@ -103,26 +95,22 @@ function line_intersection(p1: number[], p2: number[], p3: number[], p4: number[
     let x = det(d, xdiff) / div;
     let y = det(d, ydiff) / div;
 
-    // console.log("X: " + x + ", Y: " + y);
     return [x, y];
 }
 
+//i will refactor this later
 function berechnungstuff(angle: number, point: number[]){
     if(angle <= eckangle || angle >= 2*PI-eckangle){
         //rechte wand
-        // console.log("rechts");
         return line_intersection([width/2, height/2], point, [width, 0], [width, height]); // earth, meteorstart, wand_p1, wand_p2
     } else if(angle <= PI - eckangle){
         //untere wand
-        // console.log("unten");
         return line_intersection([width/2, height/2], point, [0, height], [width, height]);
     } else if(angle <= 1.5*PI - (PI/2-eckangle)){
         //linke wand
-        // console.log("links");
         return line_intersection([width/2, height/2], point, [0, 0], [0, height]);
     } else {
         //obere wand
-        // console.log("oben");
         return line_intersection([width/2, height/2], point, [0, 0], [width, 0]);
     }
 }

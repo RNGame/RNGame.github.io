@@ -58,7 +58,7 @@ function setup() {
     const width = windowWidth;
     createCanvas(width, height);
     stroke(255);
-    frameRate();
+    frameRate(60);
     noCursor();
     player = new Player(gamesize);
     meteors = [];
@@ -78,7 +78,6 @@ function draw() {
     earth.draw();
     player.draw();
     stars.forEach(star => star.draw());
-    line(0, 0, width / 2, height / 2);
     meteors.push(new Meteor(windowWidth + 400, random(PI * 2), width, height, earthSize, 50));
     meteors.forEach(meteor => {
         if (meteor.stateImpact) {
@@ -133,10 +132,8 @@ class Meteor {
         this.startX = radius * cos(angle) + this.earthX;
         this.startY = radius * sin(angle) + this.earthY;
         let schnittpunkt = berechnungstuff(angle, [this.startX, this.startY]);
-        this.posX = schnittpunkt[0];
-        this.posY = schnittpunkt[1];
-        this.startX = schnittpunkt[0];
-        this.startY = schnittpunkt[1];
+        [this.posX, this.posY] = schnittpunkt;
+        [this.startX, this.startY] = schnittpunkt;
         this.meteorSize = 25;
         this.earthsSize = earthsize / 2;
         this.playerSize = playersize / 2;
