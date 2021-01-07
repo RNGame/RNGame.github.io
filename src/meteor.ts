@@ -6,8 +6,9 @@ class Meteor{
         this.startX = radius * cos(angle) + this.earthX;
         this.startY = radius * sin(angle) + this.earthY;
 
-        this.posX = this.startX;
-        this.posY = this.startY
+        let schnittpunkt = berechnungstuff(angle, [this.startX, this.startY]); 
+        [this.posX, this.posY] = schnittpunkt;
+        [this.startX, this.startY] = schnittpunkt;
 
         this.meteorSize = 25;
         this.earthsSize = earthsize/2;
@@ -42,9 +43,16 @@ class Meteor{
 
         push();
 
+
         noStroke();
-        fill(255, 0, 0);
+
+        //randmarkierung
         ellipseMode(CENTER);
+        fill(255, 255, 0);
+        ellipse(this.startX, this.startY, 20);
+
+        //meteor
+        fill(255, 0, 0);
         ellipse(this.posX, this.posY, this.meteorSize);
 
         const distX = this.startX - this.earthX;
@@ -76,4 +84,6 @@ class Meteor{
         return false; 
     }
 
+
+    
 }
