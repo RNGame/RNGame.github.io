@@ -1,9 +1,10 @@
 {
     "compilerOptions": {
       "mapRoot": "./src/",
-      "module": "ES2020",
+      "module": "amd",
       "noImplicitAny": true,
       "outDir": "dist",
+      "outFile": "dist/build.js",
       "preserveConstEnums": true,
       "removeComments": true,
       "rootDir": "./src/",
