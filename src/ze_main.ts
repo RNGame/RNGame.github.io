@@ -15,13 +15,12 @@ let impacts: Impact[];
 
 let eckangle: number;
 
-const uniformProb = new UniformDistribution(Math.random, 0, 360);
+const uniformProb = new NormalDistribution(Math.random, 0, 1);
 
 /*
 let sound_nom: p5.SoundFile;
 let sound_oof: p5.SoundFile; 
 */
-
 function preload() {
   earth.earthImage = loadImage("/res/earth.png");
   /*
