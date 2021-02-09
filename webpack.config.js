@@ -53,8 +53,7 @@ module.exports = {
                 test: /\.ts$/,
                 exclude: [ /node_modules/ ],
                 use: 'awesome-typescript-loader'
-            },
-            { test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/, loader: "asset/resource" }
+            }
         ]
     },
 
