@@ -15,7 +15,7 @@ let impacts: Impact[];
 
 let eckangle: number;
 
-const uniformProb = new UniformDistribution(Math.random, 0, 360);
+const uniformProb: Distribution = new ExponentialDistribution(Math.random, 1);
 
 /*
 let sound_nom: p5.SoundFile;

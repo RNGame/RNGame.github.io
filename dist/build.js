@@ -20,6 +20,34 @@ class Earth {
         pop();
     }
 }
+class ExponentialDistribution {
+    constructor(rng, lambda) {
+        this._rng = rng;
+        this._min = 0;
+        this._max = Number.POSITIVE_INFINITY;
+        this._mean = 1 / lambda;
+        this._variance = Math.pow(lambda, -2);
+        this._type = DistributionType.Continuous;
+    }
+    get min() {
+        return this._min;
+    }
+    get max() {
+        return this._max;
+    }
+    get mean() {
+        return this._mean;
+    }
+    get variance() {
+        return this._variance;
+    }
+    get type() {
+        return this._type;
+    }
+    random() {
+        return -1 * Math.log(this._rng()) * this._mean;
+    }
+}
 class Impact {
     constructor(x, y, width) {
         this.posX = x;
@@ -178,7 +206,7 @@ let meteors;
 let stars;
 let impacts;
 let eckangle;
-const uniformProb = new UniformDistribution(Math.random, 0, 360);
+const uniformProb = new ExponentialDistribution(Math.random, 1);
 function preload() {
     earth.earthImage = loadImage("/res/earth.png");
 }
