@@ -1,4 +1,6 @@
-class UniformDistribution implements Distribution {
+import { Distribution, DistributionType } from "./distribution";
+
+export class UniformDistribution implements Distribution {
   _min: number;
   _max: number;
   _mean: number;

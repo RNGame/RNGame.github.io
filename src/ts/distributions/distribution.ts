@@ -1,10 +1,10 @@
-enum DistributionType {
+export enum DistributionType {
   Unknown,
   Continuous,
   Discrete,
 }
 
-interface Distribution {
+export interface Distribution {
   min: number;
   max: number;
   mean: number;

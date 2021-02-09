@@ -1,4 +1,6 @@
-class Impact{
+import p5 from "p5";
+
+export class Impact{
     constructor(x: number, y: number, width: number){
         this.posX = x;
         this.posY = y;
@@ -14,20 +16,20 @@ class Impact{
     counter: number;
     stateFinished: boolean;
 
-    draw(){
+    draw(p: p5){
         if(this.counter >= 5){
             this.stateFinished = true;
             return;
         }
         this.counter++;
 
-        push();
+        p.push();
         
-        noStroke();
-        fill(255, 255, 0);
-        ellipseMode(CENTER);
-        ellipse(this.posX, this.posY, this.width);
+        p.noStroke();
+        p.fill(255, 255, 0);
+        p.ellipseMode(p.CENTER);
+        p.ellipse(this.posX, this.posY, this.width);
 
-        pop();
+        p.pop();
     }
 }

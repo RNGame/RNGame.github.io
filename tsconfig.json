@@ -1,15 +1,15 @@
 {
-    "compilerOptions": {
-      "mapRoot": "./src/",
-      "module": "amd",
-      "noImplicitAny": true,
-      "outDir": "dist",
-      "outFile": "dist/build.js",
-      "preserveConstEnums": true,
-      "removeComments": true,
-      "rootDir": "./src/",
-      "sourceMap": true,
-      "sourceRoot": "./src/",
-      "target": "es2020"
-    }
-  }
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es6",
+    "declaration": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

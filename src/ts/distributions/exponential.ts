@@ -1,4 +1,6 @@
-class ExponentialDistribution implements Distribution {
+import { Distribution, DistributionType } from "./distribution";
+
+export class ExponentialDistribution implements Distribution {
     _min: number;
     _max: number;
     _mean: number;

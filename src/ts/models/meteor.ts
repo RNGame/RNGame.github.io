@@ -1,4 +1,6 @@
-class Meteor {
+import p5 from "p5";
+
+export class Meteor {
   constructor(
     radius: number,
     angle: number,
@@ -10,10 +12,11 @@ class Meteor {
     this.earthX = width / 2;
     this.earthY = height / 2;
 
-    this.startX = radius * cos(angle) + this.earthX;
-    this.startY = radius * sin(angle) + this.earthY;
+    this.startX = radius * Math.cos(angle) + this.earthX;
+    this.startY = radius * Math.sin(angle) + this.earthY;
 
-    let schnittpunkt = berechnungstuff(angle, [this.startX, this.startY]);
+    //let schnittpunkt = berechnungstuff(angle, [this.startX, this.startY]);
+    let schnittpunkt: number[] = [1,1];
     [this.posX, this.posY] = schnittpunkt;
     [this.startX, this.startY] = schnittpunkt;
 
@@ -44,22 +47,22 @@ class Meteor {
 
   factor: number;
 
-  draw() {
+  draw(p: p5) {
     if (this.checkImpact()) return;
-    if (this.checkNom()) return;
+    if (this.checkNom(p)) return;
 
-    push();
+    p.push();
 
-    noStroke();
+    p.noStroke();
 
     //randmarkierung
-    ellipseMode(CENTER);
-    fill(255, 255, 0);
-    ellipse(this.startX, this.startY, 20);
+    p.ellipseMode(p.CENTER);
+    p.fill(255, 255, 0);
+    p.ellipse(this.startX, this.startY, 20);
 
     //meteor
-    fill(255, 0, 0);
-    ellipse(this.posX, this.posY, this.meteorSize);
+    p.fill(255, 0, 0);
+    p.ellipse(this.posX, this.posY, this.meteorSize);
 
     const distX = this.startX - this.earthX;
     const distY = this.startY - this.earthY;
@@ -67,7 +70,7 @@ class Meteor {
     this.posX -= distX / this.factor;
     this.posY -= distY / this.factor;
 
-    pop();
+    p.pop();
   }
 
   private checkImpact(): boolean {
@@ -82,9 +85,9 @@ class Meteor {
     return false;
   }
 
-  private checkNom() {
+  private checkNom(p: p5) {
     let abstand = Math.sqrt(
-      Math.pow(this.posX - mouseX, 2) + Math.pow(this.posY - mouseY, 2)
+      Math.pow(this.posX - p.mouseX, 2) + Math.pow(this.posY - p.mouseY, 2)
     );
     if (abstand <= this.playerSize) {
       this.stateEaten = true;
