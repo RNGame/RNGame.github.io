@@ -50,8 +50,8 @@
     "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
-    "start": "webpack serve --port 9000 --inline --progress --profile --content-base src/ --mode development",
-    "build": "webpack --config webpack.config.js --mode production",
+    "start": "webpack serve --open --port 9000 --inline --progress --profile --content-base src/ --mode development",
+    "build": "webpack --config webpack.config.js --mode=production",
     "build.prod": "webpack --config webpack.config.js -p",
     "build.esnext": "npm run build:types && npm run build:js",
     "build:types": "tsc --emitDeclarationOnly",
