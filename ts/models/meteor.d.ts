@@ -1,6 +1,6 @@
 import p5 from "p5";
 export declare class Meteor {
-    constructor(radius: number, angle: number, width: number, height: number, earthsize: number, playersize: number);
+    constructor(radius: number, angle: number, width: number, height: number, earthsize: number, playersize: number, image: p5.Image);
     startX: number;
     startY: number;
     posX: number;
@@ -13,6 +13,7 @@ export declare class Meteor {
     stateImpact: boolean;
     stateEaten: boolean;
     factor: number;
+    image: p5.Image;
     draw(p: p5): void;
     private checkImpact;
     private checkNom;

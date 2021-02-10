@@ -193,7 +193,7 @@ exports.Impact = Impact;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Meteor = void 0;
 class Meteor {
-    constructor(radius, angle, width, height, earthsize, playersize) {
+    constructor(radius, angle, width, height, earthsize, playersize, image) {
         this.earthX = width / 2;
         this.earthY = height / 2;
         this.startX = radius * Math.cos(angle) + this.earthX;
@@ -202,11 +202,12 @@ class Meteor {
         let schnittpunkt = [1, 1];
         [this.posX, this.posY] = schnittpunkt;
         [this.startX, this.startY] = schnittpunkt;
-        this.meteorSize = 25;
+        this.meteorSize = 42;
         this.earthsSize = earthsize / 2;
         this.playerSize = playersize / 2;
         this.stateImpact = this.stateEaten = false;
         this.factor = 1000;
+        this.image = image;
     }
     draw(p) {
         if (this.checkImpact())
@@ -220,8 +221,7 @@ class Meteor {
         p.fill(255, 255, 0);
         p.ellipse(this.startX, this.startY, 20);
         //meteor
-        p.fill(255, 0, 0);
-        p.ellipse(this.posX, this.posY, this.meteorSize);
+        p.image(this.image, this.posX, this.posY, this.meteorSize, this.meteorSize);
         const distX = this.startX - this.earthX;
         const distY = this.startY - this.earthY;
         this.posX -= distX / this.factor;
@@ -366,6 +366,7 @@ class RNGeddonController {
             p.preload = () => {
                 this.earth.earthImage = p.loadImage("/res/earth.png");
                 this.explosionImage = p.loadImage("/res/explosion.png");
+                this.meteorImage = p.loadImage("/res/meteor.gif");
                 /*
                 sound_nom = new p5.SoundFile("/res/nom.mp3");
                 sound_oof = new p5.SoundFile("/res/oof.mp3");
@@ -396,7 +397,7 @@ class RNGeddonController {
                 this.stars.forEach((star) => star.draw(p));
                 const shouldSpawnMeteor = p.frameCount % (this.framesPerSecond / this.meteorsPerSecond) === 0;
                 if (shouldSpawnMeteor) {
-                    this.meteors.push(new meteor_1.Meteor(p.windowWidth + 400, p.random(p.PI * 2), p.width, p.height, this.earthSize, 50));
+                    this.meteors.push(new meteor_1.Meteor(p.windowWidth + 400, p.random(p.PI * 2), p.width, p.height, this.earthSize, 50, this.meteorImage));
                 }
                 this.meteors.forEach((meteor) => {
                     if (meteor.stateImpact) {
