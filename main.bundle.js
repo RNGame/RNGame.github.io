@@ -155,24 +155,28 @@ exports.Earth = Earth;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Impact = void 0;
 class Impact {
-    constructor(x, y, width) {
+    constructor(x, y, width, image) {
+        this.scale = 5;
+        this.animationLength = 20;
         this.posX = x;
         this.posY = y;
-        this.width = width;
+        this.width = 1;
+        this.maxWidth = width;
         this.counter = 0;
         this.stateFinished = false;
+        this.explosionImage = image;
     }
     draw(p) {
-        if (this.counter >= 5) {
+        if (this.counter >= this.animationLength) {
             this.stateFinished = true;
             return;
         }
+        if (this.width <= this.maxWidth) {
+            this.width += 1.5 * this.scale;
+        }
         this.counter++;
         p.push();
-        p.noStroke();
-        p.fill(255, 255, 0);
-        p.ellipseMode(p.CENTER);
-        p.ellipse(this.posX, this.posY, this.width);
+        p.image(this.explosionImage, this.posX, this.posY, this.width, this.width);
         p.pop();
     }
 }
@@ -361,6 +365,7 @@ class RNGeddonController {
         this.sketch = (p) => {
             p.preload = () => {
                 this.earth.earthImage = p.loadImage("/res/earth.png");
+                this.explosionImage = p.loadImage("/res/explosion.png");
                 /*
                 sound_nom = new p5.SoundFile("/res/nom.mp3");
                 sound_oof = new p5.SoundFile("/res/oof.mp3");
@@ -396,7 +401,7 @@ class RNGeddonController {
                 this.meteors.forEach((meteor) => {
                     if (meteor.stateImpact) {
                         this.removeMeteor(meteor);
-                        this.impacts.push(new impact_1.Impact(meteor.posX, meteor.posY, meteor.meteorSize * 2));
+                        this.impacts.push(new impact_1.Impact(meteor.posX, meteor.posY, meteor.meteorSize * 4, this.explosionImage));
                     }
                     if (meteor.stateEaten) {
                         this.addToScore(1);
