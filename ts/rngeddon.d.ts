@@ -1,5 +1,6 @@
 import p5 from "p5";
-export declare class RNGeddonController {
+import { GameControllerInterface } from "./gamecontroller_interface";
+export declare class RNGeddonController implements GameControllerInterface {
     private oldAngle;
     private gamesize;
     private earthSize;
