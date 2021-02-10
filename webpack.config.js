@@ -85,8 +85,8 @@ module.exports = (env, argv) => {
         chunks: ['main']
       }),
       new MiniCssExtractPlugin({
-        filename: "[name].css",
-        chunkFilename: "[id].css",
+        filename: isDev ? '[name].css' : '[name].[contenthash].css',
+        chunkFilename: isDev ? '[id].css' : '[id].[contenthash].css'
       }),
       new CopyPlugin({
         patterns: [{ from: "res", to: "res" }],

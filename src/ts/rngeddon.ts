@@ -7,14 +7,15 @@ import { Meteor } from "./models/meteor";
 import { Player } from "./models/player";
 import { Star } from "./models/star";
 import $ from "jquery";
+import { GameControllerInterface } from "./gamecontroller_interface";
 
-export class RNGeddonController {
+export class RNGeddonController implements GameControllerInterface {
   private oldAngle: number;
   private gamesize = 800;
 
   private earthSize = 256;
 
-  private meteorsPerSecond = 60;
+  private meteorsPerSecond = 1;
   private framesPerSecond = 60;
 
   private earth = new Earth(this.earthSize);

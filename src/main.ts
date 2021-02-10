@@ -12,7 +12,7 @@ import { RNGeddonController } from "./ts/rngeddon";
 
 const rngeddon = new RNGeddonController()
 
-if ($('.rngeddon')) {
+if ($('#game-rngeddon').length) {
   new p5(rngeddon.game())
 }
 
