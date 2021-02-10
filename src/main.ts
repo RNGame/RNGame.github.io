@@ -7,6 +7,7 @@ import { Meteor } from "./ts/models/meteor";
 import { Impact } from "./ts/models/impact";
 import { Star } from "./ts/models/star";
 import "./style/main.scss";
+import $ from 'jquery';
 
 const gamesize = 800;
 
@@ -25,12 +26,19 @@ let impacts: Impact[];
 
 let eckangle: number;
 
+let score: number = 0;
+
 const uniformProb: Distribution = new ExponentialDistribution(Math.random, 1);
 
 /*
 let sound_nom: p5.SoundFile;
 let sound_oof: p5.SoundFile; 
 */
+
+function addToScore(add: number) {
+  score += add;
+  $(".score").text(score);
+}
 
 var sketch = (p: p5) => {
   p.preload = () => {
@@ -45,7 +53,8 @@ var sketch = (p: p5) => {
     p.imageMode(p.CENTER);
     const height = p.windowHeight;
     const width = p.windowWidth;
-    p.createCanvas(width, height);
+    const canvas = p.createCanvas(width, height);
+    canvas.parent('game');
     p.stroke(255);
     p.frameRate(framesPerSecond);
     p.noCursor();
@@ -88,6 +97,7 @@ var sketch = (p: p5) => {
         impacts.push(new Impact(meteor.posX, meteor.posY, meteor.meteorSize * 2));
       }
       if (meteor.stateEaten) {
+        addToScore(1)
         removeMeteor(meteor);
         stars.push(new Star(meteor.posX, meteor.posY));
       }
