@@ -28,6 +28,7 @@
     "browser-sync": "^2.26.14",
     "copy-webpack-plugin": "^7.0.0",
     "css-loader": "^5.0.2",
+    "css-minimizer-webpack-plugin": "^1.2.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.0.0",
     "jasmine-core": "3.1.0",

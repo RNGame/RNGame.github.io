@@ -3,13 +3,14 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 const ROOT = path.resolve(__dirname, "src");
 const DESTINATION = path.resolve(__dirname, "dist");
 
 module.exports = (env, argv) => {
   const isDev = argv.mode !== "production";
-  
+
   const config = {
     context: ROOT,
 
@@ -27,9 +28,10 @@ module.exports = (env, argv) => {
       modules: [ROOT, "node_modules"],
     },
     optimization: {
-      concatenateModules: false,
-      providedExports: false,
-      usedExports: false,
+      minimize: true,
+      minimizer: [
+        new CssMinimizerPlugin(),
+      ],
     },
 
     module: {
@@ -64,7 +66,7 @@ module.exports = (env, argv) => {
             {
               loader: "css-loader",
               options: {
-                sourceMap: true,
+                sourceMap: isDev,
               },
             },
             "sass-loader",
@@ -80,13 +82,13 @@ module.exports = (env, argv) => {
         template: "index.html",
       }),
       new HtmlWebpackPlugin({
-        filename: 'rngeddon.html',
-        template: 'rngeddon.html',
-        chunks: ['main']
+        filename: "rngeddon.html",
+        template: "rngeddon.html",
+        chunks: ["main"],
       }),
       new MiniCssExtractPlugin({
-        filename: isDev ? '[name].css' : '[name].[contenthash].css',
-        chunkFilename: isDev ? '[id].css' : '[id].[contenthash].css'
+        filename: isDev ? "[name].css" : "[name].[contenthash].css",
+        chunkFilename: isDev ? "[id].css" : "[id].[contenthash].css",
       }),
       new CopyPlugin({
         patterns: [{ from: "res", to: "res" }],
