@@ -7,7 +7,8 @@ export class Meteor {
     width: number,
     height: number,
     earthsize: number,
-    playersize: number
+    playersize: number,
+    image: p5.Image
   ) {
     this.earthX = width / 2;
     this.earthY = height / 2;
@@ -20,13 +21,14 @@ export class Meteor {
     [this.posX, this.posY] = schnittpunkt;
     [this.startX, this.startY] = schnittpunkt;
 
-    this.meteorSize = 25;
+    this.meteorSize = 42;
     this.earthsSize = earthsize / 2;
     this.playerSize = playersize / 2;
 
     this.stateImpact = this.stateEaten = false;
 
     this.factor = 1000;
+    this.image = image;
   }
 
   startX: number;
@@ -47,6 +49,8 @@ export class Meteor {
 
   factor: number;
 
+  image: p5.Image;
+
   draw(p: p5) {
     if (this.checkImpact()) return;
     if (this.checkNom(p)) return;
@@ -61,8 +65,7 @@ export class Meteor {
     p.ellipse(this.startX, this.startY, 20);
 
     //meteor
-    p.fill(255, 0, 0);
-    p.ellipse(this.posX, this.posY, this.meteorSize);
+    p.image(this.image, this.posX, this.posY, this.meteorSize, this.meteorSize);
 
     const distX = this.startX - this.earthX;
     const distY = this.startY - this.earthY;

@@ -25,6 +25,7 @@ export class RNGeddonController implements GameControllerInterface {
   private impacts: Impact[];
 
   private explosionImage: p5.Image
+  private meteorImage: p5.Image
 
   private eckangle: number;
 
@@ -54,6 +55,7 @@ let sound_oof: p5.SoundFile;
 	p.preload = () => {
 	  this.earth.earthImage = p.loadImage("/res/earth.png");
 	  this.explosionImage = p.loadImage("/res/explosion.png");
+	  this.meteorImage = p.loadImage("/res/meteor.gif");
 	  /*
 	  sound_nom = new p5.SoundFile("/res/nom.mp3");
 	  sound_oof = new p5.SoundFile("/res/oof.mp3");
@@ -99,7 +101,8 @@ let sound_oof: p5.SoundFile;
 			p.width,
 			p.height,
 			this.earthSize,
-			50
+			50,
+			this.meteorImage
 		  )
 		);
 	  }
