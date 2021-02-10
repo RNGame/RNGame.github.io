@@ -79,6 +79,11 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         template: "index.html",
       }),
+      new HtmlWebpackPlugin({
+        filename: 'rngeddon.html',
+        template: 'rngeddon.html',
+        chunks: ['main']
+      }),
       new MiniCssExtractPlugin({
         filename: "[name].css",
         chunkFilename: "[id].css",

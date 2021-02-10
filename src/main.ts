@@ -8,118 +8,13 @@ import { Impact } from "./ts/models/impact";
 import { Star } from "./ts/models/star";
 import "./style/main.scss";
 import $ from 'jquery';
+import { RNGeddonController } from "./ts/rngeddon";
 
-const gamesize = 800;
+const rngeddon = new RNGeddonController()
 
-let oldAngle: number;
-
-const earthSize = 256;
-
-let meteorsPerSecond = 60;
-const framesPerSecond = 60;
-
-const earth = new Earth(earthSize);
-let player: Player;
-let meteors: Meteor[];
-let stars: Star[];
-let impacts: Impact[];
-
-let eckangle: number;
-
-let score: number = 0;
-
-const uniformProb: Distribution = new ExponentialDistribution(Math.random, 1);
-
-/*
-let sound_nom: p5.SoundFile;
-let sound_oof: p5.SoundFile; 
-*/
-
-function addToScore(add: number) {
-  score += add;
-  $(".score").text(score);
+if ($('.rngeddon')) {
+  new p5(rngeddon.game())
 }
-
-var sketch = (p: p5) => {
-  p.preload = () => {
-    earth.earthImage = p.loadImage("/res/earth.png");
-    /*
-      sound_nom = new p5.SoundFile("/res/nom.mp3");
-      sound_oof = new p5.SoundFile("/res/oof.mp3");
-      */
-  }
-  
-  p.setup = () => {
-    p.imageMode(p.CENTER);
-    const height = p.windowHeight;
-    const width = p.windowWidth;
-    const canvas = p.createCanvas(width, height);
-    canvas.parent('game');
-    p.stroke(255);
-    p.frameRate(framesPerSecond);
-    p.noCursor();
-  
-    player = new Player(gamesize);
-    meteors = [];
-    stars = [];
-    impacts = [];
-  
-    eckangle = p.atan2(height, width);
-  }
-  
-  p.windowResized = () => {
-    p.resizeCanvas(p.windowWidth, p.windowHeight);
-  }
-  
-  async function removeMeteor(meteor: Meteor) {
-    let idx = meteors.indexOf(meteor);
-    meteors.splice(idx, 1);
-  }
-  
-  p.draw = () => {
-    p.background(0);
-    earth.draw(p);
-    player.draw(p);
-  
-    stars.forEach((star) => star.draw(p));
-  
-    const shouldSpawnMeteor =
-    p.frameCount % (framesPerSecond / meteorsPerSecond) === 0;
-    if (shouldSpawnMeteor) {
-      meteors.push(
-        new Meteor(p.windowWidth + 400, p.random(p.PI * 2), p.width, p.height, earthSize, 50)
-      );
-    }
-  
-    meteors.forEach((meteor) => {
-      if (meteor.stateImpact) {
-        removeMeteor(meteor);
-        impacts.push(new Impact(meteor.posX, meteor.posY, meteor.meteorSize * 2));
-      }
-      if (meteor.stateEaten) {
-        addToScore(1)
-        removeMeteor(meteor);
-        stars.push(new Star(meteor.posX, meteor.posY));
-      }
-  
-      meteor.draw(p);
-    });
-  
-    impacts.forEach((impact) => {
-      if (impact.stateFinished) {
-        let idx = impacts.indexOf(impact);
-        impacts.splice(idx, 1);
-        return;
-      }
-  
-      impact.draw(p);
-    });
-  
-    console.log(uniformProb.random());
-  }
-};
-
-new p5(sketch)
 
 /*
 
