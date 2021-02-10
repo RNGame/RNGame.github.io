@@ -1,64 +1,91 @@
-const path = require('path');
-const webpack = require('webpack');
+const path = require("path");
+const webpack = require("webpack");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
-const ROOT = path.resolve( __dirname, 'src' );
-const DESTINATION = path.resolve( __dirname, 'dist' );
+const ROOT = path.resolve(__dirname, "src");
+const DESTINATION = path.resolve(__dirname, "dist");
+
+const isDev = process.env.NODE_ENV !== "production";
 
 module.exports = {
-    context: ROOT,
+  context: ROOT,
 
-    entry: {
-        'main': './main.ts'
-    },
-    
-    output: {
-        filename: '[name].bundle.js',
-        path: DESTINATION
-    },
+  entry: {
+    main: "./main.ts",
+  },
 
-    resolve: {
-        extensions: ['.ts', '.js'],
-        modules: [
-            ROOT,
-            'node_modules'
-        ]
-    },
-    optimization: { 
-        concatenateModules: false, 
-        providedExports: false, 
-        usedExports: false 
-    },
+  output: {
+    filename: "[name].bundle.js",
+    path: DESTINATION,
+  },
 
-    module: {
-        rules: [
-            /****************
-            * PRE-LOADERS
-            *****************/
-            {
-                enforce: 'pre',
-                test: /\.js$/,
-                use: 'source-map-loader'
+  resolve: {
+    extensions: [".ts", ".js", ".scss"],
+    modules: [ROOT, "node_modules"],
+  },
+  optimization: {
+    concatenateModules: false,
+    providedExports: false,
+    usedExports: false,
+  },
+
+  module: {
+    rules: [
+      /****************
+       * PRE-LOADERS
+       *****************/
+      {
+        enforce: "pre",
+        test: /\.js$/,
+        use: "source-map-loader",
+      },
+      {
+        enforce: "pre",
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: "tslint-loader",
+      },
+
+      /****************
+       * LOADERS
+       *****************/
+      {
+        test: /\.ts$/,
+        exclude: [/node_modules/],
+        use: "awesome-typescript-loader",
+      },
+      {
+        test: /\.(s?)css$/,
+        use: [
+          isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
             },
-            {
-                enforce: 'pre',
-                test: /\.ts$/,
-                exclude: /node_modules/,
-                use: 'tslint-loader'
-            },
+          },
+          "sass-loader",
+        ],
+      },
+    ],
+  },
 
-            /****************
-            * LOADERS
-            *****************/
-            {
-                test: /\.ts$/,
-                exclude: [ /node_modules/ ],
-                use: 'awesome-typescript-loader'
-            }
-        ]
-    },
-
-    devtool: 'cheap-module-source-map',
-    devServer: {
-    }
+  devtool: "cheap-module-source-map",
+  devServer: {},
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "index.html",
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css",
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: "res", to: "res" },
+      ],
+    }),
+  ],
 };
-

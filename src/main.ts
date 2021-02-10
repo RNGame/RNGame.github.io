@@ -6,6 +6,7 @@ import { Player } from "./ts/models/player";
 import { Meteor } from "./ts/models/meteor";
 import { Impact } from "./ts/models/impact";
 import { Star } from "./ts/models/star";
+import "./style/main.scss";
 
 const gamesize = 800;
 
