@@ -2,43 +2,51 @@ import p5 from "p5";
 
 export class Meteor {
   constructor(
-    radius: number,
-    angle: number,
-    width: number,
-    height: number,
+    rng_values: {
+      angle?: number,
+      speed?: number,
+      size?: number,
+    },
+    width: number, //width of the screen
+    height: number, //height of the screen
     earthsize: number,
     playersize: number,
     image: p5.Image
   ) {
+    let angle = rng_values.angle || Math.random() * 2*Math.PI; //default uniform distribution
+    let sizeFactor = rng_values.size || 1; //0.5: small, 2: big
+    this.speedFactor = rng_values.speed || 1000; //10: super fast, 10000: super slow
+    
     this.earthX = width / 2;
     this.earthY = height / 2;
 
-    this.startX = radius * Math.cos(angle) + this.earthX;
-    this.startY = radius * Math.sin(angle) + this.earthY;
+    let radius = width >= height ? width : height;
+    let startX = radius * Math.cos(angle) + this.earthX;
+    let startY = radius * Math.sin(angle) + this.earthY;
 
-    this.eckangle = Math.atan2(height, width);
-    let schnittpunkt = this.calcute_entrypoint(angle, [this.startX, this.startY], width, height);
-    [this.posX, this.posY] = schnittpunkt;
-    [this.startX, this.startY] = schnittpunkt;
+    this.eckangle = Math.atan2(height, width); //winkel von mitte des bildschirms zu einer ecke
+    [this.posX, this.posY] = this.calcute_entrypoint(angle, [startX, startY], width, height);
 
-    this.meteorSize = 42;
+    this.distX = this.posX - this.earthX; //distance from earth
+    this.distY = this.posY - this.earthY; //distance from earth
+
+    this.meteorSize = 42 * sizeFactor;
     this.earthsSize = earthsize / 2;
     this.playerSize = playersize / 2;
 
     this.stateImpact = this.stateEaten = false;
 
-    this.factor = 1000;
     this.image = image;
   }
-
-  startX: number;
-  startY: number;
 
   posX: number;
   posY: number;
 
   earthX: number;
   earthY: number;
+
+  distX: number;
+  distY: number;
 
   meteorSize: number;
   earthsSize: number;
@@ -47,7 +55,7 @@ export class Meteor {
   stateImpact: boolean;
   stateEaten: boolean;
 
-  factor: number;
+  speedFactor: number;
 
   image: p5.Image;
 
@@ -62,13 +70,10 @@ export class Meteor {
     //meteor
     p.image(this.image, this.posX, this.posY, this.meteorSize, this.meteorSize);
 
-    const distX = this.startX - this.earthX;
-    const distY = this.startY - this.earthY;
-
-    this.posX -= distX / this.factor;
-    this.posY -= distY / this.factor;
-
     p.pop();
+
+    this.posX -= this.distX / this.speedFactor;
+    this.posY -= this.distY / this.speedFactor;
   }
 
   private checkImpact(): boolean {

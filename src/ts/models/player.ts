@@ -2,12 +2,12 @@ import p5 from "p5";
 
 export class Player {
     constructor(gamesize: number) {
-        this.gamesize = gamesize;
+        this.playersize = gamesize / this.playerscale;
     }
 
-    playerscale = 20;
-    gamesize: number;
-    oldAngle: number;
+    private oldAngle: number;
+    private playerscale = 40000;
+    playersize: number;
     
     draw(p: p5) {
         this.pointer(p);
@@ -48,7 +48,6 @@ export class Player {
     
         //pacman boi
         let mouthangle = p.PI / 5;
-        let size = this.gamesize / this.playerscale;
-        p.arc(0, 0, size, size, mouthangle, -mouthangle);
+        p.arc(0, 0, this.playersize, this.playersize, mouthangle, -mouthangle);
     }
 }

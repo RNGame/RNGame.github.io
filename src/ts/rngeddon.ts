@@ -39,6 +39,7 @@ export class RNGeddonController implements GameControllerInterface {
 
   private earth = new Earth(this.earthSize);
   private player: Player;
+  
   private meteors: Meteor[];
   private markers: Marker[];
   private stars: Star[];
@@ -105,17 +106,9 @@ export class RNGeddonController implements GameControllerInterface {
 
         this.angleData.push(randomAngleDegree);
 
-        let new_meteor = new Meteor(
-          p.windowWidth + 400,
-          randomAngle,
-          p.width,
-          p.height,
-          this.earthSize,
-          50,
-          this.meteorImage
-        );
-        this.meteors.push(new_meteor);
-        this.markers.push(new Marker(new_meteor.startX, new_meteor.startY));
+        let new_meteor = new Meteor({angle: randomAngle}, p.width, p.height, this.earthSize, this.player.playersize, this.meteorImage)
+		this.meteors.push(new_meteor);
+		this.markers.push(new Marker(new_meteor.posX, new_meteor.posY));
       }
 
       this.meteors.forEach((meteor) => {
