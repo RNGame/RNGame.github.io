@@ -260,6 +260,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Player = void 0;
 class Player {
     constructor(gamesize) {
+        this.playerscale = 20;
         this.gamesize = gamesize;
     }
     draw(p) {
@@ -275,8 +276,8 @@ class Player {
         p.pop();
     }
     pointerRotation(p) {
-        let x = p.mouseX - p.pmouseX;
-        let y = p.mouseY - p.pmouseY;
+        let x = p.mouseX - p.pmouseX; //derzeitige maus position - maus position vom frame davor
+        let y = p.mouseY - p.pmouseY; //derzeitige maus position - maus position vom frame davor
         if (x === 0 && y === 0) {
             return this.oldAngle;
         }
@@ -292,7 +293,8 @@ class Player {
         // endShape(CLOSE);
         //pacman boi
         let mouthangle = p.PI / 5;
-        p.arc(0, 0, this.gamesize / 20, this.gamesize / 20, mouthangle, -mouthangle);
+        let size = this.gamesize / this.playerscale;
+        p.arc(0, 0, size, size, mouthangle, -mouthangle);
     }
 }
 exports.Player = Player;
@@ -367,10 +369,6 @@ class RNGeddonController {
                 this.earth.earthImage = p.loadImage("/res/earth.png");
                 this.explosionImage = p.loadImage("/res/explosion.png");
                 this.meteorImage = p.loadImage("/res/meteor.gif");
-                /*
-                sound_nom = new p5.SoundFile("/res/nom.mp3");
-                sound_oof = new p5.SoundFile("/res/oof.mp3");
-                */
             };
             p.setup = () => {
                 p.imageMode(p.CENTER);
@@ -423,10 +421,6 @@ class RNGeddonController {
             };
         };
     }
-    /*
-  let sound_nom: p5.SoundFile;
-  let sound_oof: p5.SoundFile;
-  */
     addToScore(add) {
         this.score += add;
         jquery_1.default(".score").text(this.score);
