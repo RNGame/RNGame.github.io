@@ -5,4 +5,6 @@ export declare class Marker {
     posY: number;
     size: number;
     draw(p: p5): void;
+    private circlemarker;
+    private gradientbox;
 }
