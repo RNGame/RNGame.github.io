@@ -8,6 +8,7 @@ import { Player } from "./models/player";
 import { Star } from "./models/star";
 import $ from "jquery";
 import { GameControllerInterface } from "./gamecontroller_interface";
+import Plotly from 'plotly.js';
 
 export class RNGeddonController implements GameControllerInterface {
   private oldAngle: number;
@@ -78,6 +79,26 @@ let sound_oof: p5.SoundFile;
 	  this.impacts = [];
 
 	  this.eckangle = p.atan2(height, width);
+
+	  const layout = {
+		title: 'Distribution',
+		showlegend: false
+	};
+
+	  const data: Plotly.Data[] = [
+		{
+		  x: ['giraffes', 'orangutans', 'monkeys'],
+		  y: [20, 14, 23],
+		  type: 'bar'
+		}
+	  ];
+
+	  const config: Partial<Plotly.Config> = {
+		  scrollZoom: false,
+		  displayModeBar: false
+	  }
+	  
+	  Plotly.newPlot('prob-diagram', data, layout, config);
 	};
 
 	p.windowResized = () => {

@@ -22,10 +22,15 @@ module.exports = (env, argv) => {
       filename: "[name].bundle.js",
       path: DESTINATION,
     },
-
     resolve: {
       extensions: [".ts", ".js", ".scss"],
       modules: [ROOT, "node_modules"],
+        fallback: {
+          fs: false,
+          buffer: false,
+          path: false,
+          assert: false
+        }
     },
     optimization: {
       minimize: true,
