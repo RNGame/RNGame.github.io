@@ -12,6 +12,7 @@ export declare class RNGeddonController implements GameControllerInterface {
     private impacts;
     private explosionImage;
     private meteorImage;
+    private playerImage;
     private score;
     private testProbability;
     private addToScore;
