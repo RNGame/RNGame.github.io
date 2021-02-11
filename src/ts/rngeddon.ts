@@ -11,16 +11,13 @@ import $ from "jquery";
 import { GameControllerInterface } from "./gamecontroller_interface";
 
 export class RNGeddonController implements GameControllerInterface {
-//   private oldAngle: number;
-  private gamesize = 800;
-
-  private earthSize = 256;
-
   private meteorsPerSecond = 5;
   private framesPerSecond = 60;
 
+  private earthSize = 256;
   private earth = new Earth(this.earthSize);
   private player: Player;
+  
   private meteors: Meteor[];
   private markers: Marker[];
   private stars: Star[];
@@ -60,7 +57,7 @@ export class RNGeddonController implements GameControllerInterface {
 	  p.frameRate(this.framesPerSecond);
 	  p.noCursor();
 
-	  this.player = new Player(this.gamesize);
+	  this.player = new Player(width*height);
 	  this.meteors = [];
 	  this.markers = [];
 	  this.stars = [];
@@ -80,7 +77,7 @@ export class RNGeddonController implements GameControllerInterface {
 
 	  const shouldSpawnMeteor = p.frameCount % (this.framesPerSecond / this.meteorsPerSecond) === 0;
 	  if (shouldSpawnMeteor) {
-		let new_meteor = new Meteor(p.windowWidth + 400, p.random(p.PI * 2), p.width, p.height, this.earthSize, 50, this.meteorImage)
+		let new_meteor = new Meteor(p.windowWidth + 400, p.random(p.PI * 2), p.width, p.height, this.earthSize, this.player.playersize, this.meteorImage)
 		this.meteors.push(new_meteor);
 		this.markers.push(new Marker(new_meteor.startX, new_meteor.startY));
 	  }
