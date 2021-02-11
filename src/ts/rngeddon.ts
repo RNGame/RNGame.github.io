@@ -98,9 +98,9 @@ export class RNGeddonController implements GameControllerInterface {
 
 	  const shouldSpawnMeteor = p.frameCount % (this.framesPerSecond / this.meteorsPerSecond) === 0;
 	  if (shouldSpawnMeteor) {
-		let new_meteor = new Meteor(p.windowWidth + 400, p.random(p.PI * 2), p.width, p.height, this.earthSize, this.player.playersize, this.meteorImage)
+		let new_meteor = new Meteor({}, p.width, p.height, this.earthSize, this.player.playersize, this.meteorImage)
 		this.meteors.push(new_meteor);
-		this.markers.push(new Marker(new_meteor.startX, new_meteor.startY));
+		this.markers.push(new Marker(new_meteor.posX, new_meteor.posY));
 	  }
 
 	  this.meteors.forEach((meteor) => {
