@@ -163,7 +163,7 @@ export class RNGeddonController implements GameControllerInterface {
       },
       xaxis: {
         title: {
-          text: "Degree",
+          text: "Degrees",
           font: {
             family: "Courier New, monospace",
             size: 18,
