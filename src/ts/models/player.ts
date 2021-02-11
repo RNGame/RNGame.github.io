@@ -5,6 +5,7 @@ export class Player {
         this.gamesize = gamesize;
     }
 
+    playerscale = 20;
     gamesize: number;
     oldAngle: number;
     
@@ -26,8 +27,8 @@ export class Player {
     }
     
     private pointerRotation(p: p5) {
-        let x = p.mouseX - p.pmouseX;
-        let y = p.mouseY - p.pmouseY;
+        let x = p.mouseX - p.pmouseX; //derzeitige maus position - maus position vom frame davor
+        let y = p.mouseY - p.pmouseY; //derzeitige maus position - maus position vom frame davor
     
         if (x === 0 && y === 0) {
             return this.oldAngle;
@@ -47,6 +48,7 @@ export class Player {
     
         //pacman boi
         let mouthangle = p.PI / 5;
-        p.arc(0, 0, this.gamesize / 20, this.gamesize / 20, mouthangle, -mouthangle);
+        let size = this.gamesize / this.playerscale;
+        p.arc(0, 0, size, size, mouthangle, -mouthangle);
     }
 }

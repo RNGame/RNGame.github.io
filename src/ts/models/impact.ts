@@ -20,7 +20,7 @@ export class Impact{
     explosionImage: p5.Image;
     maxWidth: number;
     scale = 5;
-    animationLength = 20
+    animationLength = 20;
 
     draw(p: p5){
         if(this.counter >= this.animationLength){
@@ -31,6 +31,7 @@ export class Impact{
         if (this.width <= this.maxWidth) {
             this.width += 1.5 * this.scale;
         }
+        
         this.counter++;
 
         p.push();

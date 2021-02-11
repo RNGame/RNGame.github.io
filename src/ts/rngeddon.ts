@@ -36,11 +36,6 @@ export class RNGeddonController implements GameControllerInterface {
 	1
   );
 
-  /*
-let sound_nom: p5.SoundFile;
-let sound_oof: p5.SoundFile; 
-*/
-
   private addToScore(add: number) {
 	this.score += add;
 	$(".score").text(this.score);
@@ -56,10 +51,6 @@ let sound_oof: p5.SoundFile;
 	  this.earth.earthImage = p.loadImage("/res/earth.png");
 	  this.explosionImage = p.loadImage("/res/explosion.png");
 	  this.meteorImage = p.loadImage("/res/meteor.gif");
-	  /*
-	  sound_nom = new p5.SoundFile("/res/nom.mp3");
-	  sound_oof = new p5.SoundFile("/res/oof.mp3");
-	  */
 	};
 
 	p.setup = () => {
