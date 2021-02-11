@@ -70,3 +70,24 @@ body{
         color: white;
     }
 }
+
+.sidebar {
+    display: flex;
+    justify-content: right;
+    flex-flow: column;
+    float: right;
+}
+
+.diagram {
+    width: 200px;
+    height: 250px;
+}
+
+.plotly {
+    text {
+        fill: white !important;
+    }
+    .main-svg {
+        background: unset !important;
+    }
+}

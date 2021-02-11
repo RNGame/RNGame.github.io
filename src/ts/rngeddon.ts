@@ -9,6 +9,7 @@ import { Player } from "./models/player";
 import { Star } from "./models/star";
 import $ from "jquery";
 import { GameControllerInterface } from "./gamecontroller_interface";
+import Plotly from 'plotly.js';
 
 export class RNGeddonController implements GameControllerInterface {
   private meteorsPerSecond = 5;
@@ -62,6 +63,26 @@ export class RNGeddonController implements GameControllerInterface {
 	  this.markers = [];
 	  this.stars = [];
 	  this.impacts = [];
+
+	  const layout = {
+		title: 'Distribution',
+		showlegend: false
+	};
+
+	  const data: Plotly.Data[] = [
+		{
+		  x: ['giraffes', 'orangutans', 'monkeys'],
+		  y: [20, 14, 23],
+		  type: 'bar'
+		}
+	  ];
+
+	  const config: Partial<Plotly.Config> = {
+		  scrollZoom: false,
+		  displayModeBar: false
+	  }
+	  
+	  Plotly.newPlot('prob-diagram', data, layout, config);
 	};
 
 	p.windowResized = () => {
