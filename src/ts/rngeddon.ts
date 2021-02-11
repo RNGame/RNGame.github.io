@@ -4,6 +4,7 @@ import { ExponentialDistribution } from "./distributions/exponential";
 import { Earth } from "./models/earth";
 import { Impact } from "./models/impact";
 import { Meteor } from "./models/meteor";
+import { Marker } from "./models/marker";
 import { Player } from "./models/player";
 import { Star } from "./models/star";
 import $ from "jquery";
@@ -11,36 +12,27 @@ import { GameControllerInterface } from "./gamecontroller_interface";
 import Plotly from 'plotly.js';
 
 export class RNGeddonController implements GameControllerInterface {
-  private oldAngle: number;
+//   private oldAngle: number;
   private gamesize = 800;
 
   private earthSize = 256;
 
-  private meteorsPerSecond = 1;
+  private meteorsPerSecond = 5;
   private framesPerSecond = 60;
 
   private earth = new Earth(this.earthSize);
   private player: Player;
   private meteors: Meteor[];
+  private markers: Marker[];
   private stars: Star[];
   private impacts: Impact[];
 
   private explosionImage: p5.Image
   private meteorImage: p5.Image
 
-  private eckangle: number;
-
   private score: number = 0;
 
-  private uniformProb: Distribution = new ExponentialDistribution(
-	Math.random,
-	1
-  );
-
-  /*
-let sound_nom: p5.SoundFile;
-let sound_oof: p5.SoundFile; 
-*/
+  private testProbability: Distribution = new ExponentialDistribution(Math.random, 1);
 
   private addToScore(add: number) {
 	this.score += add;
@@ -57,10 +49,6 @@ let sound_oof: p5.SoundFile;
 	  this.earth.earthImage = p.loadImage("/res/earth.png");
 	  this.explosionImage = p.loadImage("/res/explosion.png");
 	  this.meteorImage = p.loadImage("/res/meteor.gif");
-	  /*
-	  sound_nom = new p5.SoundFile("/res/nom.mp3");
-	  sound_oof = new p5.SoundFile("/res/oof.mp3");
-	  */
 	};
 
 	p.setup = () => {
@@ -75,10 +63,9 @@ let sound_oof: p5.SoundFile;
 
 	  this.player = new Player(this.gamesize);
 	  this.meteors = [];
+	  this.markers = [];
 	  this.stars = [];
 	  this.impacts = [];
-
-	  this.eckangle = p.atan2(height, width);
 
 	  const layout = {
 		title: 'Distribution',
@@ -112,20 +99,11 @@ let sound_oof: p5.SoundFile;
 
 	  this.stars.forEach((star) => star.draw(p));
 
-	  const shouldSpawnMeteor =
-		p.frameCount % (this.framesPerSecond / this.meteorsPerSecond) === 0;
+	  const shouldSpawnMeteor = p.frameCount % (this.framesPerSecond / this.meteorsPerSecond) === 0;
 	  if (shouldSpawnMeteor) {
-		this.meteors.push(
-		  new Meteor(
-			p.windowWidth + 400,
-			p.random(p.PI * 2),
-			p.width,
-			p.height,
-			this.earthSize,
-			50,
-			this.meteorImage
-		  )
-		);
+		let new_meteor = new Meteor(p.windowWidth + 400, p.random(p.PI * 2), p.width, p.height, this.earthSize, 50, this.meteorImage)
+		this.meteors.push(new_meteor);
+		this.markers.push(new Marker(new_meteor.startX, new_meteor.startY));
 	  }
 
 	  this.meteors.forEach((meteor) => {
@@ -144,6 +122,10 @@ let sound_oof: p5.SoundFile;
 		meteor.draw(p);
 	  });
 
+	  this.markers.forEach((marker) => {
+		marker.draw(p);
+	  });
+
 	  this.impacts.forEach((impact) => {
 		if (impact.stateFinished) {
 		  let idx = this.impacts.indexOf(impact);
@@ -154,7 +136,7 @@ let sound_oof: p5.SoundFile;
 		impact.draw(p);
 	  });
 
-	  console.log(this.uniformProb.random());
+	  console.log(this.testProbability.random());
 	};
   };
 
