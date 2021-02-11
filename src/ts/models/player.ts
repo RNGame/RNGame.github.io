@@ -6,7 +6,7 @@ export class Player {
         this.playerimage = image;
     }
 
-    private playerimage: p5.Image
+    private playerimage: p5.Image;
     private oldAngle: number;
     private playerscale = 40000;
     playersize: number;
@@ -41,7 +41,7 @@ export class Player {
     private playerShape(p: p5) {
         p.noStroke();
         p.fill(255);
-        
+
         //pointy boi
         // beginShape();
         // vertex(10, 0);
