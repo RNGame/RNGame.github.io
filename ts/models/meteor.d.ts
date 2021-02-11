@@ -14,7 +14,10 @@ export declare class Meteor {
     stateEaten: boolean;
     factor: number;
     image: p5.Image;
+    private eckangle;
     draw(p: p5): void;
     private checkImpact;
     private checkNom;
+    private line_intersection;
+    private calcute_entrypoint;
 }

@@ -1,7 +1,6 @@
 import p5 from "p5";
 import { GameControllerInterface } from "./gamecontroller_interface";
 export declare class RNGeddonController implements GameControllerInterface {
-    private oldAngle;
     private gamesize;
     private earthSize;
     private meteorsPerSecond;
@@ -9,13 +8,13 @@ export declare class RNGeddonController implements GameControllerInterface {
     private earth;
     private player;
     private meteors;
+    private markers;
     private stars;
     private impacts;
     private explosionImage;
     private meteorImage;
-    private eckangle;
     private score;
-    private uniformProb;
+    private testProbability;
     private addToScore;
     private removeMeteor;
     private sketch;

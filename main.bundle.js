@@ -18,45 +18,6 @@ const rngeddon = new rngeddon_1.RNGeddonController();
 if (jquery_1.default('#game-rngeddon').length) {
     new p5_1.default(rngeddon.game());
 }
-/*
-
-//i will refactor this later
-function line_intersection(p1: number[], p2: number[], p3: number[], p4: number[]) {
-  let xdiff = [p1[0] - p2[0], p3[0] - p4[0]];
-  let ydiff = [p1[1] - p2[1], p3[1] - p4[1]];
-
-  function det(a: number[], b: number[]) {
-    return a[0] * b[1] - a[1] * b[0];
-  }
-
-  let div = det(xdiff, ydiff);
-  //if det 0 kein, schnittpunkt
-
-  let d = [det(p1, p2), det(p3, p4)];
-  let x = det(d, xdiff) / div;
-  let y = det(d, ydiff) / div;
-
-  return [x, y];
-}
-
-//i will refactor this later
-function berechnungstuff(angle: number, point: number[]) {
-  if (angle <= eckangle || angle >= 2 * PI - eckangle) {
-    //rechte wand
-    return line_intersection([width / 2, height / 2], point, [width, 0], [width, height]); // earth, meteorstart, wand_p1, wand_p2
-  } else if (angle <= PI - eckangle) {
-    //untere wand
-    return line_intersection([width / 2, height / 2], point, [0, height], [width, height]);
-  } else if (angle <= 1.5 * PI - (PI / 2 - eckangle)) {
-    //linke wand
-    return line_intersection([width / 2, height / 2], point, [0, 0], [0, height]);
-  } else {
-    //obere wand
-    return line_intersection([width / 2, height / 2], point, [0, 0], [width, 0]);
-  }
-}
-
-*/
 
 
 /***/ }),
@@ -185,6 +146,33 @@ exports.Impact = Impact;
 
 /***/ }),
 
+/***/ 386:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Marker = void 0;
+class Marker {
+    constructor(x, y) {
+        this.size = 20;
+        this.posX = x;
+        this.posY = y;
+    }
+    draw(p) {
+        p.push();
+        p.noStroke();
+        p.ellipseMode(p.CENTER);
+        p.fill(255, 255, 0);
+        p.ellipse(this.posX, this.posY, this.size);
+        p.pop();
+    }
+}
+exports.Marker = Marker;
+
+
+/***/ }),
+
 /***/ 178:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -198,8 +186,8 @@ class Meteor {
         this.earthY = height / 2;
         this.startX = radius * Math.cos(angle) + this.earthX;
         this.startY = radius * Math.sin(angle) + this.earthY;
-        //let schnittpunkt = berechnungstuff(angle, [this.startX, this.startY]);
-        let schnittpunkt = [1, 1];
+        this.eckangle = Math.atan2(height, width);
+        let schnittpunkt = this.calcute_entrypoint(angle, [this.startX, this.startY], width, height);
         [this.posX, this.posY] = schnittpunkt;
         [this.startX, this.startY] = schnittpunkt;
         this.meteorSize = 42;
@@ -215,11 +203,6 @@ class Meteor {
         if (this.checkNom(p))
             return;
         p.push();
-        p.noStroke();
-        //randmarkierung
-        p.ellipseMode(p.CENTER);
-        p.fill(255, 255, 0);
-        p.ellipse(this.startX, this.startY, 20);
         //meteor
         p.image(this.image, this.posX, this.posY, this.meteorSize, this.meteorSize);
         const distX = this.startX - this.earthX;
@@ -244,6 +227,39 @@ class Meteor {
             return true;
         }
         return false;
+    }
+    //zur berechnung des schnittpunktes mit der außenkante des spielfelds
+    line_intersection(p1, p2, p3, p4) {
+        let xdiff = [p1[0] - p2[0], p3[0] - p4[0]];
+        let ydiff = [p1[1] - p2[1], p3[1] - p4[1]];
+        function det(a, b) {
+            return a[0] * b[1] - a[1] * b[0];
+        }
+        let div = det(xdiff, ydiff);
+        //if det 0 kein, schnittpunkt
+        let d = [det(p1, p2), det(p3, p4)];
+        let x = det(d, xdiff) / div;
+        let y = det(d, ydiff) / div;
+        return [x, y];
+    }
+    //calculates from which wall/outside edge the meteor enters the game
+    calcute_entrypoint(angle, point, width, height) {
+        if (angle <= this.eckangle || angle >= 2 * Math.PI - this.eckangle) {
+            //rechte wand
+            return this.line_intersection([this.earthX, this.earthY], point, [width, 0], [width, height]); // earth, meteorstart, wand_p1, wand_p2
+        }
+        else if (angle <= Math.PI - this.eckangle) {
+            //untere wand
+            return this.line_intersection([this.earthX, this.earthY], point, [0, height], [width, height]);
+        }
+        else if (angle <= 1.5 * Math.PI - (Math.PI / 2 - this.eckangle)) {
+            //linke wand
+            return this.line_intersection([this.earthX, this.earthY], point, [0, 0], [0, height]);
+        }
+        else {
+            //obere wand
+            return this.line_intersection([this.earthX, this.earthY], point, [0, 0], [width, 0]);
+        }
     }
 }
 exports.Meteor = Meteor;
@@ -352,18 +368,20 @@ const exponential_1 = __webpack_require__(549);
 const earth_1 = __webpack_require__(219);
 const impact_1 = __webpack_require__(145);
 const meteor_1 = __webpack_require__(178);
+const marker_1 = __webpack_require__(386);
 const player_1 = __webpack_require__(639);
 const star_1 = __webpack_require__(389);
 const jquery_1 = __importDefault(__webpack_require__(961));
 class RNGeddonController {
     constructor() {
+        //   private oldAngle: number;
         this.gamesize = 800;
         this.earthSize = 256;
-        this.meteorsPerSecond = 1;
+        this.meteorsPerSecond = 5;
         this.framesPerSecond = 60;
         this.earth = new earth_1.Earth(this.earthSize);
         this.score = 0;
-        this.uniformProb = new exponential_1.ExponentialDistribution(Math.random, 1);
+        this.testProbability = new exponential_1.ExponentialDistribution(Math.random, 1);
         this.sketch = (p) => {
             p.preload = () => {
                 this.earth.earthImage = p.loadImage("/res/earth.png");
@@ -381,9 +399,9 @@ class RNGeddonController {
                 p.noCursor();
                 this.player = new player_1.Player(this.gamesize);
                 this.meteors = [];
+                this.markers = [];
                 this.stars = [];
                 this.impacts = [];
-                this.eckangle = p.atan2(height, width);
             };
             p.windowResized = () => {
                 p.resizeCanvas(p.windowWidth, p.windowHeight);
@@ -395,7 +413,9 @@ class RNGeddonController {
                 this.stars.forEach((star) => star.draw(p));
                 const shouldSpawnMeteor = p.frameCount % (this.framesPerSecond / this.meteorsPerSecond) === 0;
                 if (shouldSpawnMeteor) {
-                    this.meteors.push(new meteor_1.Meteor(p.windowWidth + 400, p.random(p.PI * 2), p.width, p.height, this.earthSize, 50, this.meteorImage));
+                    let new_meteor = new meteor_1.Meteor(p.windowWidth + 400, p.random(p.PI * 2), p.width, p.height, this.earthSize, 50, this.meteorImage);
+                    this.meteors.push(new_meteor);
+                    this.markers.push(new marker_1.Marker(new_meteor.startX, new_meteor.startY));
                 }
                 this.meteors.forEach((meteor) => {
                     if (meteor.stateImpact) {
@@ -409,6 +429,9 @@ class RNGeddonController {
                     }
                     meteor.draw(p);
                 });
+                this.markers.forEach((marker) => {
+                    marker.draw(p);
+                });
                 this.impacts.forEach((impact) => {
                     if (impact.stateFinished) {
                         let idx = this.impacts.indexOf(impact);
@@ -417,7 +440,7 @@ class RNGeddonController {
                     }
                     impact.draw(p);
                 });
-                console.log(this.uniformProb.random());
+                console.log(this.testProbability.random());
             };
         };
     }
