@@ -9,10 +9,27 @@ import { Player } from "./models/player";
 import { Star } from "./models/star";
 import $ from "jquery";
 import { GameControllerInterface } from "./gamecontroller_interface";
-import Plotly from 'plotly.js';
+import Plotly from "plotly.js";
+import { NormalDistribution } from "./distributions/normal";
 
 export class RNGeddonController implements GameControllerInterface {
-//   private oldAngle: number;
+  constructor() {
+    this.plotDistribution(this.angleData);
+    $("#plot-button").click(() => {
+      this.plotDistribution(this.angleData);
+    });
+
+    const mpsLabel = $(".meteorsPerSecond-label");
+    mpsLabel.text(this.meteorsPerSecond);
+
+    const self = this;
+    $("#meteorsPerSecond").on("input", (event) => {
+      const value = (<HTMLInputElement>event.target).value;
+      self.meteorsPerSecond = +value;
+      mpsLabel.text(self.meteorsPerSecond);
+    });
+  }
+  //   private oldAngle: number;
   private gamesize = 800;
 
   private earthSize = 256;
@@ -27,120 +44,156 @@ export class RNGeddonController implements GameControllerInterface {
   private stars: Star[];
   private impacts: Impact[];
 
-  private explosionImage: p5.Image
-  private meteorImage: p5.Image
+  private explosionImage: p5.Image;
+  private meteorImage: p5.Image;
 
   private score: number = 0;
 
-  private testProbability: Distribution = new ExponentialDistribution(Math.random, 1);
+  private angleData: number[] = [];
+
+  private testProbability: Distribution = new NormalDistribution(Math.random, Math.PI, Math.PI / 2);
 
   private addToScore(add: number) {
-	this.score += add;
-	$(".score").text(this.score);
+    this.score += add;
+    $(".score").text(this.score);
   }
 
   private async removeMeteor(meteor: Meteor) {
-	let idx = this.meteors.indexOf(meteor);
-	this.meteors.splice(idx, 1);
+    let idx = this.meteors.indexOf(meteor);
+    this.meteors.splice(idx, 1);
   }
 
   private sketch = (p: p5) => {
-	p.preload = () => {
-	  this.earth.earthImage = p.loadImage("/res/earth.png");
-	  this.explosionImage = p.loadImage("/res/explosion.png");
-	  this.meteorImage = p.loadImage("/res/meteor.gif");
-	};
+    p.preload = () => {
+      this.earth.earthImage = p.loadImage("/res/earth.png");
+      this.explosionImage = p.loadImage("/res/explosion.png");
+      this.meteorImage = p.loadImage("/res/meteor.gif");
+    };
 
-	p.setup = () => {
-	  p.imageMode(p.CENTER);
-	  const height = p.windowHeight;
-	  const width = p.windowWidth;
-	  const canvas = p.createCanvas(width, height);
-	  canvas.parent("game-rngeddon");
-	  p.stroke(255);
-	  p.frameRate(this.framesPerSecond);
-	  p.noCursor();
+    p.setup = () => {
+      p.imageMode(p.CENTER);
+      const height = p.windowHeight;
+      const width = p.windowWidth;
+      const canvas = p.createCanvas(width, height);
+      canvas.parent("game-rngeddon");
+      p.stroke(255);
+      p.frameRate(this.framesPerSecond);
+      p.noCursor();
 
-	  this.player = new Player(this.gamesize);
-	  this.meteors = [];
-	  this.markers = [];
-	  this.stars = [];
-	  this.impacts = [];
+      this.player = new Player(this.gamesize);
+      this.meteors = [];
+      this.markers = [];
+      this.stars = [];
+      this.impacts = [];
+    };
 
-	  const layout = {
-		title: 'Distribution',
-		showlegend: false
-	};
+    p.windowResized = () => {
+      p.resizeCanvas(p.windowWidth, p.windowHeight);
+    };
 
-	  const data: Plotly.Data[] = [
-		{
-		  x: ['giraffes', 'orangutans', 'monkeys'],
-		  y: [20, 14, 23],
-		  type: 'bar'
-		}
-	  ];
+    p.draw = () => {
+      p.background(0);
+      this.earth.draw(p);
+      this.player.draw(p);
 
-	  const config: Partial<Plotly.Config> = {
-		  scrollZoom: false,
-		  displayModeBar: false
-	  }
-	  
-	  Plotly.newPlot('prob-diagram', data, layout, config);
-	};
+      this.stars.forEach((star) => star.draw(p));
 
-	p.windowResized = () => {
-	  p.resizeCanvas(p.windowWidth, p.windowHeight);
-	};
+      const shouldSpawnMeteor = p.frameCount % (this.framesPerSecond / this.meteorsPerSecond) === 0;
+      if (shouldSpawnMeteor) {
+        const randomAngle = this.testProbability.random();
+        const randomAngleDegree = Math.floor(randomAngle * (180 / Math.PI));
 
-	p.draw = () => {
-	  p.background(0);
-	  this.earth.draw(p);
-	  this.player.draw(p);
+        this.angleData.push(randomAngleDegree);
 
-	  this.stars.forEach((star) => star.draw(p));
+        let new_meteor = new Meteor(
+          p.windowWidth + 400,
+          randomAngle,
+          p.width,
+          p.height,
+          this.earthSize,
+          50,
+          this.meteorImage
+        );
+        this.meteors.push(new_meteor);
+        this.markers.push(new Marker(new_meteor.startX, new_meteor.startY));
+      }
 
-	  const shouldSpawnMeteor = p.frameCount % (this.framesPerSecond / this.meteorsPerSecond) === 0;
-	  if (shouldSpawnMeteor) {
-		let new_meteor = new Meteor(p.windowWidth + 400, p.random(p.PI * 2), p.width, p.height, this.earthSize, 50, this.meteorImage)
-		this.meteors.push(new_meteor);
-		this.markers.push(new Marker(new_meteor.startX, new_meteor.startY));
-	  }
+      this.meteors.forEach((meteor) => {
+        if (meteor.stateImpact) {
+          this.removeMeteor(meteor);
+          this.impacts.push(new Impact(meteor.posX, meteor.posY, meteor.meteorSize * 4, this.explosionImage));
+        }
+        if (meteor.stateEaten) {
+          this.addToScore(1);
+          this.removeMeteor(meteor);
+          this.stars.push(new Star(meteor.posX, meteor.posY));
+        }
 
-	  this.meteors.forEach((meteor) => {
-		if (meteor.stateImpact) {
-		  this.removeMeteor(meteor);
-		  this.impacts.push(
-			new Impact(meteor.posX, meteor.posY, meteor.meteorSize * 4, this.explosionImage)
-		  );
-		}
-		if (meteor.stateEaten) {
-		  this.addToScore(1);
-		  this.removeMeteor(meteor);
-		  this.stars.push(new Star(meteor.posX, meteor.posY));
-		}
+        meteor.draw(p);
+      });
 
-		meteor.draw(p);
-	  });
+      this.markers.forEach((marker) => {
+        marker.draw(p);
+      });
 
-	  this.markers.forEach((marker) => {
-		marker.draw(p);
-	  });
+      this.impacts.forEach((impact) => {
+        if (impact.stateFinished) {
+          let idx = this.impacts.indexOf(impact);
+          this.impacts.splice(idx, 1);
+          return;
+        }
 
-	  this.impacts.forEach((impact) => {
-		if (impact.stateFinished) {
-		  let idx = this.impacts.indexOf(impact);
-		  this.impacts.splice(idx, 1);
-		  return;
-		}
-
-		impact.draw(p);
-	  });
-
-	  console.log(this.testProbability.random());
-	};
+        impact.draw(p);
+      });
+    };
   };
 
+  private async plotDistribution(angleData: number[]) {
+    const data: Plotly.Data[] = [
+      {
+        x: angleData,
+        type: "histogram",
+      },
+    ];
+
+    const config: Partial<Plotly.Config> = {
+      scrollZoom: false,
+      displayModeBar: false,
+    };
+
+    const layout = {
+      title: "Distribution",
+      showlegend: false,
+      margin: {
+        t: 40,
+        b: 40,
+      },
+      xaxis: {
+        title: {
+          text: "Degree",
+          font: {
+            family: "Courier New, monospace",
+            size: 18,
+            color: "#fff",
+          },
+        },
+      },
+      yaxis: {
+        title: {
+          text: "Count",
+          font: {
+            family: "Courier New, monospace",
+            size: 18,
+            color: "#fff",
+          },
+        },
+      },
+    };
+
+    Plotly.newPlot("prob-diagram", data, layout, config);
+  }
+
   public game(): (p: p5) => void {
-	return this.sketch;
+    return this.sketch;
   }
 }
