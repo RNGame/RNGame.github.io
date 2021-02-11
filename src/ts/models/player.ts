@@ -1,10 +1,12 @@
 import p5 from "p5";
 
 export class Player {
-    constructor(gamesize: number) {
+    constructor(gamesize: number, image: p5.Image) {
         this.playersize = gamesize / this.playerscale;
+        this.playerimage = image;
     }
 
+    private playerimage: p5.Image
     private oldAngle: number;
     private playerscale = 40000;
     playersize: number;
@@ -17,11 +19,9 @@ export class Player {
         p.push();
     
         p.translate(p.mouseX, p.mouseY);
-        p.noStroke();
-        p.fill(255);
-    
         p.rotate(this.pointerRotation(p));
-        this.playerShape(p);
+        // this.playerShape(p);
+        p.image(this.playerimage, 0, 0, this.playersize, this.playersize);
     
         p.pop();
     }
@@ -39,6 +39,9 @@ export class Player {
     }
     
     private playerShape(p: p5) {
+        p.noStroke();
+        p.fill(255);
+        
         //pointy boi
         // beginShape();
         // vertex(10, 0);

@@ -30,8 +30,6 @@ export class RNGeddonController implements GameControllerInterface {
     });
   }
   //   private oldAngle: number;
-  private gamesize = 800;
-
   private earthSize = 256;
 
   private meteorsPerSecond = 5;
@@ -47,6 +45,7 @@ export class RNGeddonController implements GameControllerInterface {
 
   private explosionImage: p5.Image;
   private meteorImage: p5.Image;
+  private playerImage: p5.Image;
 
   private score: number = 0;
 
@@ -69,6 +68,7 @@ export class RNGeddonController implements GameControllerInterface {
       this.earth.earthImage = p.loadImage("/res/earth.png");
       this.explosionImage = p.loadImage("/res/explosion.png");
       this.meteorImage = p.loadImage("/res/meteor.gif");
+	  this.playerImage = p.loadImage("/res/spaceship.png");
     };
 
     p.setup = () => {
@@ -81,7 +81,7 @@ export class RNGeddonController implements GameControllerInterface {
       p.frameRate(this.framesPerSecond);
       p.noCursor();
 
-      this.player = new Player(this.gamesize);
+      this.player = new Player(width*height, this.playerImage);
       this.meteors = [];
       this.markers = [];
       this.stars = [];
