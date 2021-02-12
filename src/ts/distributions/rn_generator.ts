@@ -18,6 +18,7 @@ export class RandomNumberGenerator {
   yAxisLabel: string;
 
   data: number[] = [];
+  dataToDegree: boolean
 
   private randomNumberGenerator = Math.random;
 
@@ -27,13 +28,15 @@ export class RandomNumberGenerator {
     xAxisLabel: string,
     yAxisLabel: string,
     generators: { mean: GeneratorInput; sd: GeneratorInput; min: GeneratorInput; max: GeneratorInput },
-    intialDistribution = "normal"
+    intialDistribution = "normal",
+    dataToDegree = false
   ) {
     this.purpose = purpose;
     this.diagramId = this.hashCode(purpose);
     this.xAxisLabel = xAxisLabel;
     this.yAxisLabel = yAxisLabel;
     this.generators = generators;
+    this.dataToDegree = dataToDegree;
 
     $(`#${parentId}`).prepend(
       $(`
@@ -72,7 +75,11 @@ export class RandomNumberGenerator {
 
   public getNumber() {
     const number = this.distribution.random();
-    this.data.push(number);
+    let diagramNumber = number;
+    if (this.dataToDegree) {
+        diagramNumber = number * (180 / Math.PI);
+    }
+    this.data.push(diagramNumber);
     return number;
   }
 
@@ -123,7 +130,7 @@ export class RandomNumberGenerator {
         break;
     }
 
-    this.data = [];
+    this.reset();
     // TODO Marker callback
   }
 

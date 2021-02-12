@@ -56,7 +56,7 @@ export class RNGeddonController implements GameControllerInterface {
     sd: new SliderInput(0, Math.PI, Math.PI / 2, "Standard deviation", "meteorAngleContainer", 0.01),
     min: new StaticInput(0),
     max: new StaticInput(2 * Math.PI),
-  })
+  }, "normal", true)
 
   private updateScore() {
     $(".score").text(this.meteors.meteorseaten);
@@ -103,7 +103,6 @@ export class RNGeddonController implements GameControllerInterface {
       const shouldSpawnMeteor = p.frameCount % (this.framesPerSecond / this.meteorsPerSecond) === 0;
       if (shouldSpawnMeteor) {
         const randomAngle = this.meteorAngleProbability.getNumber();
-        const randomAngleDegree = Math.floor(randomAngle * (180 / Math.PI));
 
         let new_meteor = new Meteor(
           { angle: randomAngle},
