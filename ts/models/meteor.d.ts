@@ -23,6 +23,7 @@ export declare class Meteor {
     stateImpact: boolean;
     stateEaten: boolean;
     speedFactor: number;
+    sizeFactor: number;
     image: p5.Image;
     private eckangle;
     draw(p: p5): void;
