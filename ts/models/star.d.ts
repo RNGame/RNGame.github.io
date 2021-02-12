@@ -10,3 +10,10 @@ export declare class Star {
     opacity: number;
     draw(p: p5): void;
 }
+export declare class Starlist {
+    constructor();
+    stars: Star[];
+    maxstars: number;
+    push(star: Star): void;
+    draw(p: p5): void;
+}

@@ -1,6 +1,6 @@
 import p5 from "p5";
 import { Impact } from "./impact";
-import { Star } from "./star";
+import { Starlist } from "./star";
 import { Direction } from "./marker";
 export declare class Meteor {
     constructor(rng_values: {
@@ -36,7 +36,7 @@ export declare class Meteorlist {
     constructor(explosionImage: p5.Image);
     meteors: Meteor[];
     impacts: Impact[];
-    stars: Star[];
+    stars: Starlist;
     meteorseaten: number;
     explosionImage: p5.Image;
     draw(p: p5): void;
