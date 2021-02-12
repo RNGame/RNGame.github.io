@@ -49,21 +49,22 @@ export class RNGeddonController implements GameControllerInterface {
   private meteorImage: p5.Image;
   private playerImage: p5.Image;
 
-  private score: number = 0;
-
   private meteorAngleProbability: RandomNumberGenerator = new RandomNumberGenerator("meteorAngleContainer", "Meteor Angle", "Degrees", "Count", {
     mean: new SliderInput(0, Math.PI * 2, Math.PI, "Mean", "meteorAngleContainer", 0.01),
     sd: new SliderInput(0, Math.PI, Math.PI / 2, "Standard deviation", "meteorAngleContainer", 0.01),
     min: new StaticInput(0),
     max: new StaticInput(2 * Math.PI),
-  }, "normal", true)
+  }, "normal", true, (newDist: string) => {
+    this.markers = new Markerlist(this.markercolor);
+  });
 
   private updateScore() {
     $(".score").text(this.meteors.meteorseaten);
   }
 
   private reset() {
-    this.meteorAngleProbability.reset()
+    this.meteorAngleProbability.reset();
+    this.markers = new Markerlist(this.markercolor);
   }
  
   private sketch = (p: p5) => {
