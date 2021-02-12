@@ -17,7 +17,7 @@ export class Meteor {
     image: p5.Image
   ) {
     let angle = rng_values.angle || Math.random() * 2*Math.PI; //default uniform distribution
-    let sizeFactor = rng_values.size || 1; //0.5: small, 2: big
+    this.sizeFactor = rng_values.size || 1; //0.5: small, 2: big
     this.speedFactor = rng_values.speed || 1000; //10: super fast, 10000: super slow
     
     this.earthX = width / 2;
@@ -33,7 +33,7 @@ export class Meteor {
     this.distX = this.posX - this.earthX; //distance from earth
     this.distY = this.posY - this.earthY; //distance from earth
 
-    this.meteorSize = 42 * sizeFactor;
+    this.meteorSize = 42 * this.sizeFactor;
     this.earthsSize = earthsize / 2;
     this.playerSize = playersize / 2;
 
@@ -61,6 +61,7 @@ export class Meteor {
   stateEaten: boolean;
 
   speedFactor: number;
+  sizeFactor: number;
 
   image: p5.Image;
 
@@ -177,7 +178,7 @@ export class Meteorlist{
       if (meteor.stateEaten) {
         this.meteorseaten++;
         this.removeMeteor(meteor);
-        this.stars.push(new Star(meteor.posX, meteor.posY));
+        this.stars.push(new Star(meteor.posX, meteor.posY, meteor.sizeFactor));
       }
 
       meteor.draw(p);

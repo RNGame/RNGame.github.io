@@ -122,7 +122,7 @@ export class RNGeddonController implements GameControllerInterface {
         this.angleData.push(randomAngleDegree);
 
         let new_meteor = new Meteor(
-          { angle: randomAngle },
+          { angle: randomAngle},
           p.width,
           p.height,
           this.earthSize,
