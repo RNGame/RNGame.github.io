@@ -54,7 +54,7 @@ export class RNGeddonController implements GameControllerInterface {
     sd: new SliderInput(0, Math.PI, Math.PI / 2, "Standard deviation", "meteorAngleContainer", 0.01),
     min: new StaticInput(0),
     max: new StaticInput(2 * Math.PI),
-  }, "normal", true, (newDist: string) => {
+  }, "default", true, (newDist: string) => {
     this.markers = new Markerlist(this.markercolor);
   });
 
@@ -63,7 +63,7 @@ export class RNGeddonController implements GameControllerInterface {
     sd: new SliderInput(10, 10000, 5000, "Standard deviation", "meteorSpeedContainer", 1),
     min: new SliderInput(10, 10000, 10, "Minimum speed", "meteorSpeedContainer", 1),
     max: new SliderInput(10, 10000, 10000, "Maximum speed", "meteorSpeedContainer", 1),
-  }, "normal", true);
+  }, "default", true);
 
   private updateScore() {
     $(".score").text(this.meteors.meteorseaten);
@@ -110,10 +110,11 @@ export class RNGeddonController implements GameControllerInterface {
       //add new meteor (and marker)
       const shouldSpawnMeteor = p.frameCount % (this.framesPerSecond / this.meteorsPerSecond) === 0;
       if (shouldSpawnMeteor) {
-        const randomAngle = this.meteorAngleProbability.getNumber();
+        const randomAngle = !this.meteorAngleProbability.isDefault ? this.meteorAngleProbability.getNumber(): undefined;
+        const randomSpeed = !this.meteorSpeedProbability.isDefault ? this.meteorSpeedProbability.getNumber(): undefined;
 
         let new_meteor = new Meteor(
-          { angle: randomAngle , speed: this.meteorSpeedProbability.getNumber()},
+          { angle: randomAngle , speed: randomSpeed},
           p.width,
           p.height,
           this.earthSize,
