@@ -77,49 +77,6 @@ export class Marker{
     }
 }
 
-class SecondaryMarker{
-    constructor(x: number, y: number, size: number){
-        this.posX = x;
-        this.posY = y;
-        this.size = size * 1.25;
-
-        this.counter = 0;
-        this.stateFinished = false;
-    }
-
-    posX: number;
-    posY: number;
-    size: number;
-
-    counter: number;
-    opacity = 200;
-    animationlength = 300;
-    stateFinished: boolean;
-
-    draw(p: p5, color: p5.Color){
-        if(this.counter >= this.animationlength){
-            this.stateFinished = true;
-            return;
-        }
-        this.counter++;
-
-        let opacity = this.opacity - this.opacity / this.animationlength * this.counter
-        //lighten up the color
-        // let mixcolor = p.lerpColor(color, p.color(255), 1)
-        // mixcolor.setAlpha(opacity);
-        let mixcolor = p.color(255, opacity);
-        
-        p.push();
-
-        p.noStroke();
-        p.fill(mixcolor);
-        p.ellipseMode(p.CENTER);
-        p.ellipse(this.posX, this.posY, this.size);
-
-        p.pop();
-    }
-}
-
 export class Markerlist{
     constructor(color: p5.Color){
         this.north = [];
@@ -127,7 +84,7 @@ export class Markerlist{
         this.east = [];
         this.west = [];
 
-        this.secondarymarkers = [];
+        this.secondarymarkers = new SecondaryMarkerlist();
 
         this.color = color;
     }
@@ -137,12 +94,12 @@ export class Markerlist{
     east: Marker[];
     west: Marker[];
 
-    secondarymarkers: SecondaryMarker[];
+    secondarymarkers: SecondaryMarkerlist;
 
     color: p5.Color;
 
     draw(p: p5){
-        this.secondarymarkers.forEach(marker => marker.draw(p, this.color));
+        this.secondarymarkers.draw(p, this.color);
 
         this.north.forEach(marker => marker.draw(p, this.color));
         this.south.forEach(marker => marker.draw(p, this.color));
@@ -228,5 +185,76 @@ export class Markerlist{
         }else{
             list.push(new Marker(newCoord, marker_large.posY, newSize, marker_large.direction));
         }
+    }
+}
+
+class SecondaryMarker{
+    constructor(x: number, y: number, size: number){
+        this.posX = x;
+        this.posY = y;
+        this.size = size * 1.25;
+
+        this.counter = 0;
+        this.stateFinished = false;
+    }
+
+    posX: number;
+    posY: number;
+    size: number;
+
+    counter: number;
+    opacity = 200;
+    animationlength = 300;
+    stateFinished: boolean;
+
+    draw(p: p5, color: p5.Color){
+        if(this.counter >= this.animationlength){
+            this.stateFinished = true;
+            return;
+        }
+        this.counter++;
+
+        let opacity = this.opacity - this.opacity / this.animationlength * this.counter
+        //lighten up the color
+        // let mixcolor = p.lerpColor(color, p.color(255), 1)
+        // mixcolor.setAlpha(opacity);
+        let mixcolor = p.color(255, opacity);
+
+        p.push();
+
+        p.noStroke();
+        p.fill(mixcolor);
+        p.ellipseMode(p.CENTER);
+        p.ellipse(this.posX, this.posY, this.size);
+
+        p.pop();
+    }
+}
+
+class SecondaryMarkerlist{
+    constructor(){
+        this.markers = [];
+    }
+
+    markers: SecondaryMarker[];
+
+    draw(p: p5, color: p5.Color){
+        this.markers.forEach(marker => {
+            if(marker.stateFinished){
+                this.removemarker(marker);
+                return;
+            }
+            marker.draw(p, color)
+        });
+
+        // console.log(`SecMarkerLength: ${this.markers.length}`);
+    }
+
+    push(marker: SecondaryMarker){
+        this.markers.push(marker);
+    }
+
+    private removemarker(marker: SecondaryMarker){
+        this.markers.splice(this.markers.indexOf(marker), 1);
     }
 }
