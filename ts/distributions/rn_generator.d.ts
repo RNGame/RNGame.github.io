@@ -15,13 +15,14 @@ export declare class RandomNumberGenerator {
     xAxisLabel: string;
     yAxisLabel: string;
     data: number[];
+    dataToDegree: boolean;
     private randomNumberGenerator;
     constructor(parentId: string, purpose: string, xAxisLabel: string, yAxisLabel: string, generators: {
         mean: GeneratorInput;
         sd: GeneratorInput;
         min: GeneratorInput;
         max: GeneratorInput;
-    }, intialDistribution?: string);
+    }, intialDistribution?: string, dataToDegree?: boolean);
     getNumber(): number;
     reset(): void;
     private hashCode;
