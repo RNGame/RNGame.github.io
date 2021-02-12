@@ -5,12 +5,12 @@ export class Star{
         this.posX = x;
         this.posY = y;
 
-        this.width = 2;
+        this.size = 2;
     }
 
     posX: number;
     posY: number;
-    width: number;
+    size: number;
 
     draw(p: p5){
         p.push();
@@ -18,7 +18,7 @@ export class Star{
         p.noStroke();
         p.fill(255);
         p.ellipseMode(p.CENTER);
-        p.ellipse(this.posX, this.posY, this.width) 
+        p.ellipse(this.posX, this.posY, this.size) 
 
         p.pop();
     }

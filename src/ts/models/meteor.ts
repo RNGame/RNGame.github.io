@@ -1,4 +1,7 @@
 import p5 from "p5";
+import { Impact } from "./impact";
+import { Star } from "./star";
+import { Direction } from "./marker";
 
 export class Meteor {
   constructor(
@@ -47,6 +50,8 @@ export class Meteor {
 
   distX: number;
   distY: number;
+
+  direction: Direction;
 
   meteorSize: number;
   earthsSize: number;
@@ -100,7 +105,7 @@ export class Meteor {
   }
 
   //zur berechnung des schnittpunktes mit der außenkante des spielfelds
-  private line_intersection(p1: number[], p2: number[], p3: number[], p4: number[]) {
+  private line_intersection(p1: number[], p2: number[], p3: number[], p4: number[]): number[] {
     let xdiff = [p1[0] - p2[0], p3[0] - p4[0]];
     let ydiff = [p1[1] - p2[1], p3[1] - p4[1]];
 
@@ -119,19 +124,83 @@ export class Meteor {
   }
 
   //calculates from which wall/outside edge the meteor enters the game
-  private calcute_entrypoint(angle: number, point: number[], width: number, height: number) {
+  private calcute_entrypoint(angle: number, point: number[], width: number, height: number): number[] {
     if (angle <= this.eckangle || angle >= 2 * Math.PI - this.eckangle) {
-      //rechte wand
+      //rechte wand ... east
+      this.direction = Direction.East;
       return this.line_intersection([this.earthX, this.earthY], point, [width, 0], [width, height]); // earth, meteorstart, wand_p1, wand_p2
     } else if (angle <= Math.PI - this.eckangle) {
-      //untere wand
+      //untere wand ... south
+      this.direction = Direction.South;
       return this.line_intersection([this.earthX, this.earthY], point, [0, height], [width, height]);
     } else if (angle <= 1.5 * Math.PI - (Math.PI / 2 - this.eckangle)) {
-      //linke wand
+      //linke wand ... west
+      this.direction = Direction.West;
       return this.line_intersection([this.earthX, this.earthY], point, [0, 0], [0, height]);
     } else {
-      //obere wand
+      //obere wand ... north
+      this.direction = Direction.North;
       return this.line_intersection([this.earthX, this.earthY], point, [0, 0], [width, 0]);
     }
+  }
+}
+
+export class Meteorlist{
+  constructor(explosionImage: p5.Image){
+    this.meteors = [];
+    this.impacts = [];
+    this.stars = [];
+
+    this.meteorseaten = 0;
+
+    this.explosionImage = explosionImage;
+  }
+
+  meteors: Meteor[];
+  impacts: Impact[];
+  stars: Star[];
+
+  meteorseaten: number;
+
+  explosionImage: p5.Image;
+
+  draw(p: p5){
+    //draw stars
+    this.stars.forEach((star) => star.draw(p));
+
+    //draw meteors
+    this.meteors.forEach((meteor) => {
+      if (meteor.stateImpact) {
+        this.removeMeteor(meteor);
+        this.impacts.push(new Impact(meteor.posX, meteor.posY, meteor.meteorSize * 4, this.explosionImage));
+      }
+      if (meteor.stateEaten) {
+        this.meteorseaten++;
+        this.removeMeteor(meteor);
+        this.stars.push(new Star(meteor.posX, meteor.posY));
+      }
+
+      meteor.draw(p);
+    });
+
+    //draw impacts
+    this.impacts.forEach((impact) => {
+      if (impact.stateFinished) {
+        let idx = this.impacts.indexOf(impact);
+        this.impacts.splice(idx, 1);
+        return;
+      }
+
+      impact.draw(p);
+    });
+  }
+
+  push(meteor: Meteor){
+      this.meteors.push(meteor);
+  }
+
+  private removeMeteor(meteor: Meteor){
+    let idx = this.meteors.indexOf(meteor);
+    this.meteors.splice(idx, 1);
   }
 }
