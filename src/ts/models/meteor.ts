@@ -1,6 +1,6 @@
 import p5 from "p5";
 import { Impact } from "./impact";
-import { Star } from "./star";
+import { Star, Starlist } from "./star";
 import { Direction } from "./marker";
 
 export class Meteor {
@@ -150,7 +150,7 @@ export class Meteorlist{
   constructor(explosionImage: p5.Image){
     this.meteors = [];
     this.impacts = [];
-    this.stars = [];
+    this.stars = new Starlist();
 
     this.meteorseaten = 0;
 
@@ -159,7 +159,7 @@ export class Meteorlist{
 
   meteors: Meteor[];
   impacts: Impact[];
-  stars: Star[];
+  stars: Starlist;
 
   meteorseaten: number;
 
@@ -167,7 +167,7 @@ export class Meteorlist{
 
   draw(p: p5){
     //draw stars
-    this.stars.forEach((star) => star.draw(p));
+    this.stars.draw(p);
 
     //draw meteors
     this.meteors.forEach((meteor) => {
