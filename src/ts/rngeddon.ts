@@ -54,14 +54,17 @@ export class RNGeddonController implements GameControllerInterface {
     sd: new SliderInput(0, Math.PI, Math.PI / 2, "Standard deviation", "meteorAngleContainer", 0.01),
     min: new StaticInput(0),
     max: new StaticInput(2 * Math.PI),
-  }, "normal", true)
+  }, "normal", true, (newDist: string) => {
+    this.markers = new Markerlist(this.markercolor);
+  });
 
   private updateScore() {
     $(".score").text(this.meteors.meteorseaten);
   }
 
   private reset() {
-    this.meteorAngleProbability.reset()
+    this.meteorAngleProbability.reset();
+    this.markers = new Markerlist(this.markercolor);
   }
  
   private sketch = (p: p5) => {

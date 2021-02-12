@@ -21,6 +21,7 @@ export class RandomNumberGenerator {
   dataToDegree: boolean
 
   private randomNumberGenerator = Math.random;
+  private distributionSwitchCallback: (newDist: string) => void;
 
   constructor(
     parentId: string,
@@ -29,7 +30,8 @@ export class RandomNumberGenerator {
     yAxisLabel: string,
     generators: { mean: GeneratorInput; sd: GeneratorInput; min: GeneratorInput; max: GeneratorInput },
     intialDistribution = "normal",
-    dataToDegree = false
+    dataToDegree = false,
+    distributionSwitchCallback?: (newDist: string) => void
   ) {
     this.purpose = purpose;
     this.diagramId = this.hashCode(purpose);
@@ -37,6 +39,7 @@ export class RandomNumberGenerator {
     this.yAxisLabel = yAxisLabel;
     this.generators = generators;
     this.dataToDegree = dataToDegree;
+    this.distributionSwitchCallback = distributionSwitchCallback;
 
     $(`#${parentId}`).prepend(
       $(`
@@ -131,7 +134,9 @@ export class RandomNumberGenerator {
     }
 
     this.reset();
-    // TODO Marker callback
+    if (this.distributionSwitchCallback) {
+        this.distributionSwitchCallback(distribution);
+    }
   }
 
   private async plotDistribution(angleData: number[]) {
