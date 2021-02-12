@@ -14,12 +14,10 @@ export declare class RNGeddonController implements GameControllerInterface {
     private explosionImage;
     private meteorImage;
     private playerImage;
-    private angleData;
-    private randomNumberGenerator;
+    private score;
     private meteorAngleProbability;
-    private switchMeteorAngleDistribution;
     private updateScore;
+    private reset;
     private sketch;
-    private plotDistribution;
     game(): (p: p5) => void;
 }
