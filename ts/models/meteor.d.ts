@@ -29,6 +29,7 @@ export declare class Meteor {
     draw(p: p5): void;
     private checkImpact;
     private checkNom;
+    private sanitize_angle;
     private line_intersection;
     private calcute_entrypoint;
 }
