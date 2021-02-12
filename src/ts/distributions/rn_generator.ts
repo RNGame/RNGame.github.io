@@ -59,7 +59,7 @@ export class RandomNumberGenerator {
           </select>`)
     );
 
-    $(`#${parentId}`).prepend($(`<label for="dist-${purpose}">${purpose}</label>`));
+    $(`#${parentId}`).prepend($(`<label for="dist-${this.diagramId}" class="dist">${purpose}</label>`));
 
     this.switchMeteorAngleDistribution(intialDistribution);
 
