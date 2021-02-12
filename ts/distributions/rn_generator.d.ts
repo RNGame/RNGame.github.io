@@ -16,6 +16,7 @@ export declare class RandomNumberGenerator {
     yAxisLabel: string;
     data: number[];
     dataToDegree: boolean;
+    isDefault: boolean;
     private randomNumberGenerator;
     private distributionSwitchCallback;
     constructor(parentId: string, purpose: string, xAxisLabel: string, yAxisLabel: string, generators: {
