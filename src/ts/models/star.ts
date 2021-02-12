@@ -20,7 +20,6 @@ export class Star{
     animationlength = 100;
     opacity = 255;
 
-
     draw(p: p5){
         if(this.countup){
             this.counter++;
@@ -41,5 +40,26 @@ export class Star{
         p.ellipse(this.posX, this.posY, this.size) 
 
         p.pop();
+    }
+}
+
+export class Starlist{
+    constructor(){
+        this.stars = [];
+    }
+
+    stars: Star[];
+    maxstars = 10000;
+
+    push(star: Star){
+        if(this.stars.length >= this.maxstars){
+            this.stars.pop();
+        }
+
+        this.stars.push(star);
+    }
+
+    draw(p: p5){
+        this.stars.forEach(star => star.draw(p));
     }
 }
