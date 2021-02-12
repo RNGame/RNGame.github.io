@@ -17,12 +17,13 @@ export declare class RandomNumberGenerator {
     data: number[];
     dataToDegree: boolean;
     private randomNumberGenerator;
+    private distributionSwitchCallback;
     constructor(parentId: string, purpose: string, xAxisLabel: string, yAxisLabel: string, generators: {
         mean: GeneratorInput;
         sd: GeneratorInput;
         min: GeneratorInput;
         max: GeneratorInput;
-    }, intialDistribution?: string, dataToDegree?: boolean);
+    }, intialDistribution?: string, dataToDegree?: boolean, distributionSwitchCallback?: (newDist: string) => void);
     getNumber(): number;
     reset(): void;
     private hashCode;
