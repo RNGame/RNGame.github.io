@@ -3,8 +3,8 @@ import { Distribution } from "./distributions/distribution";
 import { ExponentialDistribution } from "./distributions/exponential";
 import { Earth } from "./models/earth";
 import { Impact } from "./models/impact";
-import { Meteor } from "./models/meteor";
-import { Marker } from "./models/marker";
+import { Meteor, Meteorlist } from "./models/meteor";
+import { Marker, Markerlist } from "./models/marker";
 import { Player } from "./models/player";
 import { Star } from "./models/star";
 import $ from "jquery";
@@ -28,8 +28,8 @@ export class RNGeddonController implements GameControllerInterface {
       mpsLabel.text(self.meteorsPerSecond);
     });
   }
-  //   private oldAngle: number;
   private earthSize = 256;
+  private markersize = 20;
 
   private meteorsPerSecond = 5;
   private framesPerSecond = 60;
@@ -37,10 +37,9 @@ export class RNGeddonController implements GameControllerInterface {
   private earth = new Earth(this.earthSize);
   private player: Player;
 
-  private meteors: Meteor[];
-  private markers: Marker[];
-  private stars: Star[];
-  private impacts: Impact[];
+  private meteors: Meteorlist;
+  private markers: Markerlist;
+  private markercolor: p5.Color;
 
   private explosionImage: p5.Image;
   private meteorImage: p5.Image;
@@ -49,8 +48,8 @@ export class RNGeddonController implements GameControllerInterface {
   private score: number = 0;
 
   private meteorAngleProbability: RandomNumberGenerator = new RandomNumberGenerator("meteorAngleContainer", "Meteor Angle", "Degrees", "Count", {
-    mean: new SliderInput(0, Math.PI * 2, Math.PI, "Mean", "meteorAngleContainer", 0.1),
-    sd: new SliderInput(0, Math.PI, Math.PI / 2, "Standard deviation", "meteorAngleContainer", 0.1),
+    mean: new SliderInput(0, Math.PI * 2, Math.PI, "Mean", "meteorAngleContainer", 0.01),
+    sd: new SliderInput(0, Math.PI, Math.PI / 2, "Standard deviation", "meteorAngleContainer", 0.01),
     min: new StaticInput(0),
     max: new StaticInput(2 * Math.PI),
   })
@@ -60,11 +59,10 @@ export class RNGeddonController implements GameControllerInterface {
     $(".score").text(this.score);
   }
 
-  private async removeMeteor(meteor: Meteor) {
-    let idx = this.meteors.indexOf(meteor);
-    this.meteors.splice(idx, 1);
+  private updateScore() {
+    $(".score").text(this.meteors.meteorseaten);
   }
-
+ 
   private sketch = (p: p5) => {
     p.preload = () => {
       this.earth.earthImage = p.loadImage("/res/earth.png");
@@ -84,10 +82,9 @@ export class RNGeddonController implements GameControllerInterface {
       p.noCursor();
 
       this.player = new Player(width * height, this.playerImage);
-      this.meteors = [];
-      this.markers = [];
-      this.stars = [];
-      this.impacts = [];
+      this.meteors = new Meteorlist(this.explosionImage);
+      this.markercolor = p.color(66, 239, 245);
+      this.markers = new Markerlist(this.markercolor);
     };
 
     p.windowResized = () => {
@@ -99,15 +96,14 @@ export class RNGeddonController implements GameControllerInterface {
       this.earth.draw(p);
       this.player.draw(p);
 
-      this.stars.forEach((star) => star.draw(p));
-
+      //add new meteor (and marker)
       const shouldSpawnMeteor = p.frameCount % (this.framesPerSecond / this.meteorsPerSecond) === 0;
       if (shouldSpawnMeteor) {
         const randomAngle = this.meteorAngleProbability.getNumber();
         const randomAngleDegree = Math.floor(randomAngle * (180 / Math.PI));
 
         let new_meteor = new Meteor(
-          { angle: randomAngle },
+          { angle: randomAngle},
           p.width,
           p.height,
           this.earthSize,
@@ -115,36 +111,17 @@ export class RNGeddonController implements GameControllerInterface {
           this.meteorImage
         );
         this.meteors.push(new_meteor);
-        this.markers.push(new Marker(new_meteor.posX, new_meteor.posY));
+        this.markers.push(new Marker(new_meteor.posX, new_meteor.posY, this.markersize, new_meteor.direction));
       }
 
-      this.meteors.forEach((meteor) => {
-        if (meteor.stateImpact) {
-          this.removeMeteor(meteor);
-          this.impacts.push(new Impact(meteor.posX, meteor.posY, meteor.meteorSize * 4, this.explosionImage));
-        }
-        if (meteor.stateEaten) {
-          this.addToScore(1);
-          this.removeMeteor(meteor);
-          this.stars.push(new Star(meteor.posX, meteor.posY));
-        }
+      //draw markers
+      this.markers.draw(p);
 
-        meteor.draw(p);
-      });
+      //draw meteors
+      this.meteors.draw(p);
 
-      this.markers.forEach((marker) => {
-        marker.draw(p);
-      });
-
-      this.impacts.forEach((impact) => {
-        if (impact.stateFinished) {
-          let idx = this.impacts.indexOf(impact);
-          this.impacts.splice(idx, 1);
-          return;
-        }
-
-        impact.draw(p);
-      });
+      //update score
+      this.updateScore();
     };
   };
 
