@@ -115,7 +115,7 @@ export class RandomNumberGenerator {
     switch (distribution) {
       case "default":
         this.isDefault = true;
-        this.generators.min.disabled(true);
+        this.generators.max.disabled(true);
         this.generators.min.disabled(true);
         this.generators.sd.disabled(true);
         this.generators.mean.disabled(true);
@@ -123,7 +123,7 @@ export class RandomNumberGenerator {
         break;
       case "uniform":
         this.isDefault = false;
-        this.generators.min.disabled(false);
+        this.generators.max.disabled(false);
         this.generators.min.disabled(false);
         this.generators.sd.disabled(true);
         this.generators.mean.disabled(true);
@@ -138,7 +138,7 @@ export class RandomNumberGenerator {
         this.generators.sd.disabled(false);
         this.generators.mean.disabled(false);
         this.generators.min.disabled(true);
-        this.generators.min.disabled(true);
+        this.generators.max.disabled(true);
         this.distribution = new NormalDistribution(
           this.randomNumberGenerator,
           this.generators.mean,
