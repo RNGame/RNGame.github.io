@@ -16,7 +16,8 @@ export class Meteor {
     playersize: number,
     image: p5.Image
   ) {
-    let angle = rng_values.angle || Math.random() * 2*Math.PI; //default uniform distribution
+    let angle = this.sanitize_angle(rng_values.angle) || Math.random() * 2*Math.PI; //default, uniform distribution
+    // console.log(`A: ${angle}, I: ${rng_values.angle}`);
     this.sizeFactor = rng_values.size || 1; //0.5: small, 2: big
     this.speedFactor = rng_values.speed || 1000; //10: super fast, 10000: super slow
     
@@ -29,6 +30,10 @@ export class Meteor {
 
     this.eckangle = Math.atan2(height, width); //winkel von mitte des bildschirms zu einer ecke
     [this.posX, this.posY] = this.calcute_entrypoint(angle, [startX, startY], width, height);
+    // console.log(`X: ${this.posX}, Y: ${this.posY}`);
+    // if(this.posX < 0 || this.posX > 1673 || this.posY < 0 || this.posY > 1074){
+    //   console.log(`A: ${angle}, startX: ${startX}, startY: ${startY}, X: ${this.posX}, Y: ${this.posY}`);
+    // }
 
     this.distX = this.posX - this.earthX; //distance from earth
     this.distY = this.posY - this.earthY; //distance from earth
@@ -103,6 +108,15 @@ export class Meteor {
       return true;
     }
     return false;
+  }
+
+  //makes sure the angle is between 0 and 2 PI
+  private sanitize_angle(angle: number){
+    let sanitized = angle % (2*Math.PI);
+    if(sanitized < 0){
+      sanitized += 2*Math.PI;
+    }
+    return sanitized;
   }
 
   //zur berechnung des schnittpunktes mit der außenkante des spielfelds
