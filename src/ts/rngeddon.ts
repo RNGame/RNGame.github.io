@@ -15,7 +15,9 @@ import { UniformDistribution } from "./distributions/uniform";
 
 export class RNGeddonController implements GameControllerInterface {
   constructor() {
-    this.plotDistribution(this.angleData);
+	$(() => {
+		this.plotDistribution(this.angleData);
+	})
     $("#plot-button").click(() => {
       this.plotDistribution(this.angleData);
     });
