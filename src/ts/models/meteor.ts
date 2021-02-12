@@ -31,9 +31,9 @@ export class Meteor {
     this.eckangle = Math.atan2(height, width); //winkel von mitte des bildschirms zu einer ecke
     [this.posX, this.posY] = this.calcute_entrypoint(angle, [startX, startY], width, height);
     // console.log(`X: ${this.posX}, Y: ${this.posY}`);
-    if(this.posX < 0 || this.posX > 1673 || this.posY < 0 || this.posY > 1074){
-      console.log(`A: ${angle}, startX: ${startX}, startY: ${startY}, X: ${this.posX}, Y: ${this.posY}`);
-    }
+    // if(this.posX < 0 || this.posX > 1673 || this.posY < 0 || this.posY > 1074){
+    //   console.log(`A: ${angle}, startX: ${startX}, startY: ${startY}, X: ${this.posX}, Y: ${this.posY}`);
+    // }
 
     this.distX = this.posX - this.earthX; //distance from earth
     this.distY = this.posY - this.earthY; //distance from earth
