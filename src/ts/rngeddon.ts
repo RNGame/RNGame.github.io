@@ -58,6 +58,13 @@ export class RNGeddonController implements GameControllerInterface {
     this.markers = new Markerlist(this.markercolor);
   });
 
+  private meteorSpeedProbability: RandomNumberGenerator = new RandomNumberGenerator("meteorSpeedContainer", "Meteor Speed", "Speed value", "Count", {
+    mean: new SliderInput(10, 10000, 5000, "Mean", "meteorSpeedContainer", 1),
+    sd: new SliderInput(10, 10000, 5000, "Standard deviation", "meteorSpeedContainer", 1),
+    min: new SliderInput(10, 10000, 10, "Minimum speed", "meteorSpeedContainer", 1),
+    max: new SliderInput(10, 10000, 10000, "Maximum speed", "meteorSpeedContainer", 1),
+  }, "normal", true);
+
   private updateScore() {
     $(".score").text(this.meteors.meteorseaten);
   }
@@ -106,7 +113,7 @@ export class RNGeddonController implements GameControllerInterface {
         const randomAngle = this.meteorAngleProbability.getNumber();
 
         let new_meteor = new Meteor(
-          { angle: randomAngle},
+          { angle: randomAngle , speed: this.meteorSpeedProbability.getNumber()},
           p.width,
           p.height,
           this.earthSize,
