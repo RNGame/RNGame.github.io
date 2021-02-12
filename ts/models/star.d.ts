@@ -3,6 +3,6 @@ export declare class Star {
     constructor(x: number, y: number);
     posX: number;
     posY: number;
-    width: number;
+    size: number;
     draw(p: p5): void;
 }

@@ -1,4 +1,7 @@
 import p5 from "p5";
+import { Impact } from "./impact";
+import { Star } from "./star";
+import { Direction } from "./marker";
 export declare class Meteor {
     constructor(rng_values: {
         angle?: number;
@@ -13,6 +16,7 @@ export declare class Meteor {
     earthY: number;
     distX: number;
     distY: number;
+    direction: Direction;
     meteorSize: number;
     earthsSize: number;
     playerSize: number;
@@ -26,4 +30,15 @@ export declare class Meteor {
     private checkNom;
     private line_intersection;
     private calcute_entrypoint;
+}
+export declare class Meteorlist {
+    constructor(explosionImage: p5.Image);
+    meteors: Meteor[];
+    impacts: Impact[];
+    stars: Star[];
+    meteorseaten: number;
+    explosionImage: p5.Image;
+    draw(p: p5): void;
+    push(meteor: Meteor): void;
+    private removeMeteor;
 }
