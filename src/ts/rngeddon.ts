@@ -27,6 +27,10 @@ export class RNGeddonController implements GameControllerInterface {
       self.meteorsPerSecond = +value;
       mpsLabel.text(self.meteorsPerSecond);
     });
+
+    $(".reset").click(() => {
+      this.reset();
+    });
   }
   private earthSize = 256;
   private markersize = 20;
@@ -54,13 +58,12 @@ export class RNGeddonController implements GameControllerInterface {
     max: new StaticInput(2 * Math.PI),
   })
 
-  private addToScore(add: number) {
-    this.score += add;
-    $(".score").text(this.score);
-  }
-
   private updateScore() {
     $(".score").text(this.meteors.meteorseaten);
+  }
+
+  private reset() {
+    this.meteorAngleProbability.reset()
   }
  
   private sketch = (p: p5) => {

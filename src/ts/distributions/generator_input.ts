@@ -2,6 +2,7 @@ import $ from "jquery";
 
 export interface GeneratorInput {
   getInput(): number;
+  reset(): void;
   disabled(bool: boolean): void;
 }
 
@@ -27,7 +28,8 @@ export class SliderInput implements GeneratorInput {
     this.sliderName = sliderName;
     this.sliderId = this.hashCode(sliderName + parentId);
     this.parentId = parentId;
-    this.currentValue = initial;
+    this.initial = initial;
+    this.currentValue = this.initial;
 
     if ($("#" + parentId).length === 0) {
       throw new Error("DOM Element with " + parentId + " does not exist.");
@@ -52,10 +54,15 @@ export class SliderInput implements GeneratorInput {
     const self = this;
     this.sliderElement.on("input", (event) => {
       const value = (<HTMLInputElement>event.target).value;
-      console.log(value);
       self.currentValue = +value;
       self.sliderLabel.text(self.currentValue);
     });
+  }
+
+  reset(): void {
+    this.currentValue = this.initial;
+    this.sliderElement.val(this.currentValue);
+    this.sliderLabel.text(this.currentValue);
   }
 
   disabled(bool: boolean): void {
@@ -89,6 +96,9 @@ export class StaticInput implements GeneratorInput {
   number: number;
   constructor(number: number) {
     this.number = number;
+  }
+  reset(): void {
+    return;
   }
   disabled(bool: boolean): void {
     return;

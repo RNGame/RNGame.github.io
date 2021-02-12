@@ -41,7 +41,7 @@ export class RandomNumberGenerator {
   
           <div id="diagram-${this.diagramId}" class="diagram"></div>
           <div class="spacer"></div>
-          <div id="diagram-button-${this.diagramId}" class="btn fs-18">Plot</div>
+          <div id="diagram-button-${this.diagramId}" class="btn small">Plot</div>
           `)
     );
 
@@ -74,6 +74,15 @@ export class RandomNumberGenerator {
     const number = this.distribution.random();
     this.data.push(number);
     return number;
+  }
+
+  public reset() {
+    this.data = [];
+    this.plotDistribution(this.data);
+    this.generators.max.reset()
+    this.generators.min.reset()
+    this.generators.sd.reset()
+    this.generators.mean.reset()
   }
 
   private hashCode(str: string): string {
