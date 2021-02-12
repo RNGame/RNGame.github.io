@@ -12,15 +12,11 @@ import { GameControllerInterface } from "./gamecontroller_interface";
 import Plotly from "plotly.js";
 import { NormalDistribution } from "./distributions/normal";
 import { UniformDistribution } from "./distributions/uniform";
+import { RandomNumberGenerator } from "./distributions/rn_generator";
+import { SliderInput, StaticInput } from "./distributions/generator_input";
 
 export class RNGeddonController implements GameControllerInterface {
   constructor() {
-	$(() => {
-		this.plotDistribution(this.angleData);
-	})
-    $("#plot-button").click(() => {
-      this.plotDistribution(this.angleData);
-    });
 
     const mpsLabel = $(".meteorsPerSecond-label");
     mpsLabel.text(this.meteorsPerSecond);
@@ -30,11 +26,6 @@ export class RNGeddonController implements GameControllerInterface {
       const value = (<HTMLInputElement>event.target).value;
       self.meteorsPerSecond = +value;
       mpsLabel.text(self.meteorsPerSecond);
-    });
-
-    $("#meteorAngleDistribution").on("input", (event) => {
-      const value = (<HTMLInputElement>event.target).value;
-      self.switchMeteorAngleDistribution(value);
     });
   }
   //   private oldAngle: number;
@@ -57,27 +48,12 @@ export class RNGeddonController implements GameControllerInterface {
 
   private score: number = 0;
 
-  private angleData: number[] = [];
-
-  private randomNumberGenerator = Math.random;
-  private meteorAngleProbability: Distribution = new NormalDistribution(
-    this.randomNumberGenerator,
-    Math.PI,
-    Math.PI / 2
-  );
-
-  private switchMeteorAngleDistribution(distribution: string) {
-    switch (distribution) {
-      case "uniform":
-        this.meteorAngleProbability = new UniformDistribution(this.randomNumberGenerator, 0, Math.PI * 2);
-        break;
-      case "normal":
-        this.meteorAngleProbability = new NormalDistribution(this.randomNumberGenerator, Math.PI, Math.PI / 2);
-        break;
-    }
-    this.angleData = [];
-    this.markers = [];
-  }
+  private meteorAngleProbability: RandomNumberGenerator = new RandomNumberGenerator("meteorAngleContainer", "Meteor Angle", "Degrees", "Count", {
+    mean: new SliderInput(0, Math.PI * 2, Math.PI, "Mean", "meteorAngleContainer", 0.1),
+    sd: new SliderInput(0, Math.PI, Math.PI / 2, "Standard deviation", "meteorAngleContainer", 0.1),
+    min: new StaticInput(0),
+    max: new StaticInput(2 * Math.PI),
+  })
 
   private addToScore(add: number) {
     this.score += add;
@@ -127,10 +103,8 @@ export class RNGeddonController implements GameControllerInterface {
 
       const shouldSpawnMeteor = p.frameCount % (this.framesPerSecond / this.meteorsPerSecond) === 0;
       if (shouldSpawnMeteor) {
-        const randomAngle = this.meteorAngleProbability.random();
+        const randomAngle = this.meteorAngleProbability.getNumber();
         const randomAngleDegree = Math.floor(randomAngle * (180 / Math.PI));
-
-        this.angleData.push(randomAngleDegree);
 
         let new_meteor = new Meteor(
           { angle: randomAngle },
@@ -173,51 +147,6 @@ export class RNGeddonController implements GameControllerInterface {
       });
     };
   };
-
-  private async plotDistribution(angleData: number[]) {
-    const data: Plotly.Data[] = [
-      {
-        x: angleData,
-        type: "histogram",
-      },
-    ];
-
-    const config: Partial<Plotly.Config> = {
-      scrollZoom: false,
-      displayModeBar: false,
-    };
-
-    const layout = {
-      title: "Distribution",
-      showlegend: false,
-      margin: {
-        t: 40,
-        b: 40,
-      },
-      xaxis: {
-        title: {
-          text: "Degrees",
-          font: {
-            family: "Courier New, monospace",
-            size: 18,
-            color: "#fff",
-          },
-        },
-      },
-      yaxis: {
-        title: {
-          text: "Count",
-          font: {
-            family: "Courier New, monospace",
-            size: 18,
-            color: "#fff",
-          },
-        },
-      },
-    };
-
-    Plotly.newPlot("prob-diagram", data, layout, config);
-  }
 
   public game(): (p: p5) => void {
     return this.sketch;

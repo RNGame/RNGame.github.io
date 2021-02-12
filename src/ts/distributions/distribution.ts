@@ -1,3 +1,5 @@
+import { GeneratorInput } from "./generator_input";
+
 export enum DistributionType {
   Unknown,
   Continuous,

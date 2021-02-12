@@ -1,33 +1,35 @@
 import { Distribution, DistributionType } from "./distribution";
+import { GeneratorInput } from "./generator_input";
 
 export class UniformDistribution implements Distribution {
-  _min: number;
-  _max: number;
+  _min: GeneratorInput;
+  _max: GeneratorInput;
   _mean: number;
   _variance: number;
   _type: DistributionType;
   _rng: () => number;
   _range: number;
 
-  constructor(rng: () => number, min: number, max: number) {
+  constructor(rng: () => number, min: GeneratorInput, max: GeneratorInput) {
     this._rng = rng;
     this._min = min;
     this._max = max;
-    this._range = max - min;
-    this._mean = min + this._range / 2;
-    this._variance = (this._range * this._range) / 12;
+    this._range = max.getInput() - min.getInput();
+    this._mean = min.getInput() + this._range / 2;
+    this._variance = (this.range * this.range) / 12;
     this._type = DistributionType.Continuous;
   }
 
   get min(): number {
-    return this._min;
+    return this._min.getInput();
   }
 
   get max(): number {
-    return this._max;
+    return this._max.getInput();
   }
 
   get mean(): number {
+    this._mean = this._min.getInput() + this.range / 2;
     return this._mean;
   }
 
@@ -39,7 +41,12 @@ export class UniformDistribution implements Distribution {
     return this._type;
   }
 
+  get range(): number {
+    this._range = this._max.getInput() - this._min.getInput();
+    return this._range;
+  }
+
   random(): number {
-    return this._min + this._rng() * this._range;
+    return this._min.getInput() + this._rng() * this.range;
   }
 }

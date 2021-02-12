@@ -1,10 +1,11 @@
 import { Distribution, DistributionType } from "./distribution";
+import { GeneratorInput } from "./generator_input";
 
 export class NormalDistribution implements Distribution {
     _min: number;
     _max: number;
-    _mean: number; //mittelwert
-    _sd: number; //standardabweichung
+    _mean: GeneratorInput; //mittelwert
+    _sd: GeneratorInput; //standardabweichung
     _variance: number; //varianz
     _type: DistributionType;
     _rng: () => number;
@@ -12,7 +13,7 @@ export class NormalDistribution implements Distribution {
     _y1: number | null;
     _y2: number | null;
   
-    constructor(rng: () => number, mean: number, sd: number) {
+    constructor(rng: () => number, mean: GeneratorInput, sd: GeneratorInput) {
       this._rng = () => {
           return rng() * 2 - 1 //wert im bereich [-1, 1]
         };
@@ -20,7 +21,7 @@ export class NormalDistribution implements Distribution {
       this._max = Number.POSITIVE_INFINITY;
       this._mean = mean;
       this._sd = sd;
-      this._variance = sd * sd;
+      this._variance = this._sd.getInput() * this._sd.getInput();
       this._type = DistributionType.Continuous;
       this._y1 = null;
       this._y2 = null;
@@ -35,10 +36,11 @@ export class NormalDistribution implements Distribution {
     }
   
     get mean(): number {
-      return this._mean;
+      return this._mean.getInput();
     }
   
     get variance(): number {
+      this._variance = this._sd.getInput() * this._sd.getInput();
       return this._variance;
     }
   
@@ -54,7 +56,7 @@ export class NormalDistribution implements Distribution {
       if(this._y2 !== null){
           this._y1 = this._y2;
           this._y2 = null;
-          return this._y1 * this._sd + this._mean;
+          return this._y1 * this._sd.getInput() + this._mean.getInput();
       }
 
       do {
@@ -66,6 +68,6 @@ export class NormalDistribution implements Distribution {
       w = Math.sqrt((-2.0 * Math.log(w)) / w);
       this._y1 = x1 * w;
       this._y2 = x2 * w;
-      return this._y1 * this._sd + this._mean;
+      return this._y1 * this._sd.getInput() + this._mean.getInput();
     }
   }
