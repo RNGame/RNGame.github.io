@@ -49,8 +49,6 @@ export class RNGeddonController implements GameControllerInterface {
   private meteorImage: p5.Image;
   private playerImage: p5.Image;
 
-  private score: number = 0;
-
   private meteorAngleProbability: RandomNumberGenerator = new RandomNumberGenerator("meteorAngleContainer", "Meteor Angle", "Degrees", "Count", {
     mean: new SliderInput(0, Math.PI * 2, Math.PI, "Mean", "meteorAngleContainer", 0.01),
     sd: new SliderInput(0, Math.PI, Math.PI / 2, "Standard deviation", "meteorAngleContainer", 0.01),

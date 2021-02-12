@@ -16,7 +16,7 @@ export class Meteor {
     playersize: number,
     image: p5.Image
   ) {
-    let angle = rng_values.angle || Math.random() * 2*Math.PI; //default uniform distribution
+    let angle = this.sanitize_angle(rng_values.angle) || Math.random() * 2*Math.PI; //default, uniform distribution
     this.sizeFactor = rng_values.size || 1; //0.5: small, 2: big
     this.speedFactor = rng_values.speed || 1000; //10: super fast, 10000: super slow
     
@@ -103,6 +103,11 @@ export class Meteor {
       return true;
     }
     return false;
+  }
+
+  //makes sure the angle is between 0 and 2 PI
+  private sanitize_angle(angle: number){
+    return angle % (2*Math.PI);
   }
 
   //zur berechnung des schnittpunktes mit der außenkante des spielfelds
