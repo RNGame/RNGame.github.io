@@ -139,6 +139,7 @@ export class RNGeddonController implements GameControllerInterface {
       //draw meteors
       this.meteors.draw(p);
 
+      //update score
       this.updateScore();
     };
   };

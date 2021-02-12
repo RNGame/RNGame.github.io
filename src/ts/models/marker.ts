@@ -32,7 +32,7 @@ export class Marker{
 
     posX: number;
     posY: number;
-    size: number;;
+    size: number;
 
     direction: Direction; //canvasedge the marker is on (north, east, south, west)
     alignment: Alignment; //is the canvasedge horizontal or vertical
@@ -71,9 +71,52 @@ export class Marker{
             var inter = p.map(w, 0, this.size, 0, 1);
             var c = p.lerpColor(color, black, inter);
             p.stroke(c);
-            p.rectMode(p.CENTER)
+            p.rectMode(p.CENTER);
             p.square(this.posX, this.posY, w);
           }
+    }
+}
+
+class SecondaryMarker{
+    constructor(x: number, y: number, size: number){
+        this.posX = x;
+        this.posY = y;
+        this.size = size * 1.25;
+
+        this.counter = 0;
+        this.stateFinished = false;
+    }
+
+    posX: number;
+    posY: number;
+    size: number;
+
+    counter: number;
+    opacity = 200;
+    animationlength = 300;
+    stateFinished: boolean;
+
+    draw(p: p5, color: p5.Color){
+        if(this.counter >= this.animationlength){
+            this.stateFinished = true;
+            return;
+        }
+        this.counter++;
+
+        let opacity = this.opacity - this.opacity / this.animationlength * this.counter
+        //lighten up the color
+        // let mixcolor = p.lerpColor(color, p.color(255), 1)
+        // mixcolor.setAlpha(opacity);
+        let mixcolor = p.color(255, opacity);
+        
+        p.push();
+
+        p.noStroke();
+        p.fill(mixcolor);
+        p.ellipseMode(p.CENTER);
+        p.ellipse(this.posX, this.posY, this.size);
+
+        p.pop();
     }
 }
 
@@ -84,6 +127,8 @@ export class Markerlist{
         this.east = [];
         this.west = [];
 
+        this.secondarymarkers = [];
+
         this.color = color;
     }
 
@@ -92,9 +137,13 @@ export class Markerlist{
     east: Marker[];
     west: Marker[];
 
+    secondarymarkers: SecondaryMarker[];
+
     color: p5.Color;
 
     draw(p: p5){
+        this.secondarymarkers.forEach(marker => marker.draw(p, this.color));
+
         this.north.forEach(marker => marker.draw(p, this.color));
         this.south.forEach(marker => marker.draw(p, this.color));
         this.east.forEach(marker => marker.draw(p, this.color));
@@ -125,6 +174,8 @@ export class Markerlist{
                 this.pushtolist(marker, this.west, true);
                 break;
         }
+
+        this.secondarymarkers.push(new SecondaryMarker(marker.posX, marker.posY, marker.size));
     }
 
     private pushtolist(new_marker: Marker, list: Marker[], isvertical: boolean){
