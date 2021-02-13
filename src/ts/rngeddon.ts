@@ -59,11 +59,11 @@ export class RNGeddonController implements GameControllerInterface {
   });
 
   private meteorSpeedProbability: RandomNumberGenerator = new RandomNumberGenerator("meteorSpeedContainer", "Meteor Speed", "Speed value", "Count", {
-    mean: new SliderInput(10, 10000, 5000, "Mean", "meteorSpeedContainer", 1),
-    sd: new SliderInput(10, 10000, 5000, "Standard deviation", "meteorSpeedContainer", 1),
-    min: new SliderInput(10, 10000, 10, "Minimum speed", "meteorSpeedContainer", 1),
-    max: new SliderInput(10, 10000, 10000, "Maximum speed", "meteorSpeedContainer", 1),
-  }, "default", true);
+    mean: new SliderInput(10, 10000, 1000, "Mean", "meteorSpeedContainer", 1),
+    sd: new SliderInput(10, 10000, 100, "Standard deviation", "meteorSpeedContainer", 1),
+    min: new SliderInput(10, 10000, 1000, "Minimum speed", "meteorSpeedContainer", 1),
+    max: new SliderInput(10, 10000, 2000, "Maximum speed", "meteorSpeedContainer", 1),
+  }, "default", false);
 
   private updateScore() {
     $(".score").text(this.meteors.meteorseaten);
