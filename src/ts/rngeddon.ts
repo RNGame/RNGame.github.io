@@ -54,7 +54,7 @@ export class RNGeddonController implements GameControllerInterface {
     sd: new SliderInput(0, Math.PI, Math.PI / 2, "Standard deviation", "meteorAngleContainer", 0.01),
     min: new StaticInput(0),
     max: new StaticInput(2 * Math.PI),
-  }, "default", true, (newDist: string) => {
+  }, "uniform", true, (newDist: string) => {
     this.markers = new Markerlist(this.markercolor);
   });
 
@@ -63,7 +63,7 @@ export class RNGeddonController implements GameControllerInterface {
     sd: new SliderInput(10, 10000, 100, "Standard deviation", "meteorSpeedContainer", 1),
     min: new SliderInput(10, 10000, 1000, "Minimum speed", "meteorSpeedContainer", 1),
     max: new SliderInput(10, 10000, 2000, "Maximum speed", "meteorSpeedContainer", 1),
-  }, "default", false);
+  }, "normal", false);
 
   private updateScore() {
     $(".score").text(this.meteors.meteorseaten);
