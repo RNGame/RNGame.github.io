@@ -58,7 +58,7 @@ export class RNGeddonController implements GameControllerInterface {
     this.markers = new Markerlist(this.markercolor);
   });
 
-  private meteorSpeedProbability: RandomNumberGenerator = new RandomNumberGenerator("meteorSpeedContainer", "Meteor Speed", "Speed value", "Count", {
+  private meteorSpeedProbability: RandomNumberGenerator = new RandomNumberGenerator("meteorSpeedContainer", "Meteor Speed", "Speed value(lower is faster)", "Count", {
     mean: new SliderInput(10, 10000, 1000, "Mean", "meteorSpeedContainer", 1),
     sd: new SliderInput(10, 10000, 100, "Standard deviation", "meteorSpeedContainer", 1),
     min: new SliderInput(10, 10000, 1000, "Minimum speed", "meteorSpeedContainer", 1),
@@ -71,6 +71,8 @@ export class RNGeddonController implements GameControllerInterface {
 
   private reset() {
     this.meteorAngleProbability.reset();
+    this.meteorSpeedProbability.reset();
+    this.meteors = new Meteorlist(this.explosionImage);
     this.markers = new Markerlist(this.markercolor);
   }
  

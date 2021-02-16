@@ -93,10 +93,12 @@ export class RandomNumberGenerator {
   public reset() {
     this.data = [];
     this.plotDistribution(this.data);
+    /*
     this.generators.max.reset();
     this.generators.min.reset();
     this.generators.sd.reset();
     this.generators.mean.reset();
+    */
   }
 
   private hashCode(str: string): string {
