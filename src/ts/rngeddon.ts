@@ -110,7 +110,8 @@ export class RNGeddonController implements GameControllerInterface {
       this.player.draw(p);
 
       //add new meteor (and marker)
-      const shouldSpawnMeteor = p.frameCount % (this.framesPerSecond / this.meteorsPerSecond) === 0;
+      const shouldSpawnMeteor = p.frameCount % (Math.floor(this.framesPerSecond / this.meteorsPerSecond)) === 0;
+      
       if (shouldSpawnMeteor) {
         const randomAngle = !this.meteorAngleProbability.isDefault ? this.meteorAngleProbability.getNumber(): undefined;
         const randomSpeed = !this.meteorSpeedProbability.isDefault ? this.meteorSpeedProbability.getNumber(): undefined;
