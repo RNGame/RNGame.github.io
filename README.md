@@ -1,2 +1,2 @@
-# RNGame Dummy
+# RNGame
 

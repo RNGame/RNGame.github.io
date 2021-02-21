@@ -176,6 +176,7 @@ export class Meteorlist{
   stars: Starlist;
 
   meteorseaten: number;
+  meteorsImpacted: number = 0;
 
   explosionImage: p5.Image;
 
@@ -187,6 +188,7 @@ export class Meteorlist{
     this.meteors.forEach((meteor) => {
       if (meteor.stateImpact) {
         this.removeMeteor(meteor);
+        this.meteorsImpacted++;
         this.impacts.push(new Impact(meteor.posX, meteor.posY, meteor.meteorSize * 4, this.explosionImage));
       }
       if (meteor.stateEaten) {

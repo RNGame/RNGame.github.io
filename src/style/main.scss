@@ -14,10 +14,65 @@ body {
   font-family: "Source Sans Pro", sans-serif;
 }
 
+img {
+  display: block;
+}
+
 select {
   height: 25px;
   background-color: black;
   color: white;
+}
+
+input[type=checkbox]{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+.toggle-label {
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 50px;
+	height: 25px;
+	background: grey;
+	display: block;
+	border-radius: 100px;
+	position: relative;
+}
+
+.toggle-label:after {
+	content: '';
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	width: 15px;
+	height: 15px;
+	background: #fff;
+	border-radius: 30px;
+	transition: 0.3s;
+}
+
+input:checked + .toggle-label {
+	background: #005CC8;
+}
+
+input:checked + .toggle-label:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+.toggle-label:active:after {
+	width: 10px;
+}
+
+.simulation-game {
+  display: inline-flex;
+  margin: 1rem 0;
+
+  .sim-switch-label {
+    margin: auto 0;
+  }
 }
 
 .main-menu {
@@ -67,10 +122,12 @@ label.dist {
   background-color: black;
   cursor: pointer;
 
+  img {
+    color: white;
+  }
+
   &:hover {
-    background: white;
-    color: black;
-    border-radius: 25px;
+    border-radius: 30px;
   }
 
   &.small {
@@ -163,4 +220,16 @@ div::-webkit-scrollbar-thumb {
   .main-svg {
     background: unset !important;
   }
+}
+
+.game-controls {
+  position: absolute;
+  bottom: 25px;
+  display: flex;
+  width: 33%;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
 }

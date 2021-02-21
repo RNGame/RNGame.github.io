@@ -16,9 +16,17 @@
       <span class="score-label">Score:&nbsp;</span>
       <span class="score">0</span>
     </div>
+    <div class="status">
+      <span class="score-label">Earth health:&nbsp;</span>
+      <span class="game-life">100%</span>
+    </div>
 
     <div class="sidebar">
       <div class="btn small mb-1 reset">Reset</div>
+      <div class="simulation-game">
+        <label for="sim-switch" class="sim-switch-label">Indestructible earth</label>
+        <input type="checkbox" id="sim-switch" /><label class="toggle-label" for="sim-switch">Toggle</label>
+      </div>
       <div id="meteorAngleContainer" class="rn-generator"></div>
 	  
       <div class="spacer spacer-line"></div>
@@ -30,6 +38,11 @@
       <label for="meteorsPerSecond">Meteors per second: <span class="meteorsPerSecond-label">1</span></label>
       <input min="1" max="60" value="5" id="meteorsPerSecond" type="range" />
       <div class="spacer"></div>
+    </div>
+
+    <div class="game-controls">
+      <div class="btn" id="start-game">Start game</div>
+      <div class="btn" id="end-game" style="display: none;">End game</div>
     </div>
   </body>
 </html>
