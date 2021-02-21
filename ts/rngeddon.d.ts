@@ -4,6 +4,10 @@ export declare class RNGeddonController implements GameControllerInterface {
     constructor();
     private earthSize;
     private markersize;
+    private isRunning;
+    private maxEarthLife;
+    private life;
+    private isSimulation;
     private meteorsPerSecond;
     private framesPerSecond;
     private earth;
@@ -17,6 +21,8 @@ export declare class RNGeddonController implements GameControllerInterface {
     private meteorAngleProbability;
     private meteorSpeedProbability;
     private updateScore;
+    private updateLife;
+    private endGame;
     private reset;
     private sketch;
     game(): (p: p5) => void;

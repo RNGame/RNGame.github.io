@@ -39,6 +39,7 @@ export declare class Meteorlist {
     impacts: Impact[];
     stars: Starlist;
     meteorseaten: number;
+    meteorsImpacted: number;
     explosionImage: p5.Image;
     draw(p: p5): void;
     push(meteor: Meteor): void;
