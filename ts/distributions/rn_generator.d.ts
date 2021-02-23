@@ -9,6 +9,7 @@ export declare class RandomNumberGenerator {
         sd: GeneratorInput;
         min: GeneratorInput;
         max: GeneratorInput;
+        lambda: GeneratorInput;
     };
     purpose: string;
     diagramId: string;
@@ -16,7 +17,6 @@ export declare class RandomNumberGenerator {
     yAxisLabel: string;
     data: number[];
     dataToDegree: boolean;
-    isDefault: boolean;
     private randomNumberGenerator;
     private distributionSwitchCallback;
     constructor(parentId: string, purpose: string, xAxisLabel: string, yAxisLabel: string, generators: {
@@ -24,6 +24,7 @@ export declare class RandomNumberGenerator {
         sd: GeneratorInput;
         min: GeneratorInput;
         max: GeneratorInput;
+        lambda: GeneratorInput;
     }, intialDistribution?: string, dataToDegree?: boolean, distributionSwitchCallback?: (newDist: string) => void);
     getNumber(): number;
     reset(): void;
