@@ -77,6 +77,7 @@ export class RNGeddonController implements GameControllerInterface {
       sd: new SliderInput(0, Math.PI, Math.PI / 2, "Standard deviation", "meteorAngleContainer", 0.01),
       min: new StaticInput(0),
       max: new StaticInput(2 * Math.PI),
+      lambda: new SliderInput(0, 2, 1, "Lambda", "meteorAngleContainer", 0.1),
     },
     "uniform",
     true,
@@ -95,6 +96,7 @@ export class RNGeddonController implements GameControllerInterface {
       sd: new SliderInput(10, 10000, 100, "Standard deviation", "meteorSpeedContainer", 1),
       min: new SliderInput(10, 10000, 1000, "Minimum speed", "meteorSpeedContainer", 1),
       max: new SliderInput(10, 10000, 2000, "Maximum speed", "meteorSpeedContainer", 1),
+      lambda: new SliderInput(0, 2, 1, "Lambda", "meteorSpeedContainer", 0.1),
     },
     "normal",
     false
@@ -165,12 +167,8 @@ export class RNGeddonController implements GameControllerInterface {
       const shouldSpawnMeteor = p.frameCount % Math.floor(this.framesPerSecond / this.meteorsPerSecond) === 0;
 
       if (shouldSpawnMeteor) {
-        const randomAngle = !this.meteorAngleProbability.isDefault
-          ? this.meteorAngleProbability.getNumber()
-          : undefined;
-        const randomSpeed = !this.meteorSpeedProbability.isDefault
-          ? this.meteorSpeedProbability.getNumber()
-          : undefined;
+        const randomAngle = this.meteorAngleProbability.getNumber();
+        const randomSpeed = this.meteorSpeedProbability.getNumber();
 
         let new_meteor = new Meteor(
           { angle: randomAngle, speed: randomSpeed },
