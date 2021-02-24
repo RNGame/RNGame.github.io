@@ -10,6 +10,7 @@ export declare class RNGeddonController implements GameControllerInterface {
     private isSimulation;
     private meteorsPerSecond;
     private framesPerSecond;
+    private secondsPerPlot;
     private earth;
     private player;
     private meteors;
