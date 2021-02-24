@@ -30,5 +30,5 @@ export declare class RandomNumberGenerator {
     reset(): void;
     private hashCode;
     private switchMeteorAngleDistribution;
-    private plotDistribution;
+    plotDistribution(angleData: number[]): Promise<void>;
 }
