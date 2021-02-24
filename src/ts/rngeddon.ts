@@ -42,9 +42,6 @@ export class RNGeddonController implements GameControllerInterface {
     });
 
     $("#end-game").click(() => {
-      $("#end-game").hide();
-      $("#pause-game").hide();
-      $("#start-game").show();
       this.endGame();
     });
   }
@@ -116,7 +113,9 @@ export class RNGeddonController implements GameControllerInterface {
   }
 
   private endGame() {
-    // this.isRunning = false;
+    $("#end-game").hide();
+    $("#pause-game").hide();
+    $("#start-game").show();
     this.gameinstance.noLoop()
     this.meteors = new Meteorlist(this.explosionImage);
     this.markers = new Markerlist(this.markercolor);
