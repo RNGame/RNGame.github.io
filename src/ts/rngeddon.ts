@@ -1,17 +1,10 @@
 import p5 from "p5";
-import { Distribution } from "./distributions/distribution";
-import { ExponentialDistribution } from "./distributions/exponential";
 import { Earth } from "./models/earth";
-import { Impact } from "./models/impact";
 import { Meteor, Meteorlist } from "./models/meteor";
 import { Marker, Markerlist } from "./models/marker";
 import { Player } from "./models/player";
-import { Star } from "./models/star";
 import $ from "jquery";
 import { GameControllerInterface } from "./gamecontroller_interface";
-import Plotly from "plotly.js";
-import { NormalDistribution } from "./distributions/normal";
-import { UniformDistribution } from "./distributions/uniform";
 import { RandomNumberGenerator } from "./distributions/rn_generator";
 import { SliderInput, StaticInput } from "./distributions/generator_input";
 
