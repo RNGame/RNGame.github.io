@@ -2,9 +2,9 @@ import p5 from "p5";
 import { GameControllerInterface } from "./gamecontroller_interface";
 export declare class RNGeddonController implements GameControllerInterface {
     constructor();
+    private gameinstance;
     private earthSize;
     private markersize;
-    private isRunning;
     private maxEarthLife;
     private life;
     private isSimulation;
