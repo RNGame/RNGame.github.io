@@ -66,6 +66,7 @@ export class RNGeddonController implements GameControllerInterface {
 
   private meteorsPerSecond = 5;
   private framesPerSecond = 60;
+  private secondsPerPlot = 1;
 
   private earth = new Earth(this.earthSize);
   private player: Player;
@@ -214,7 +215,7 @@ export class RNGeddonController implements GameControllerInterface {
       this.updateLife();
 
       //plot new data
-      if(p.frameCount % this.framesPerSecond === 0){
+      if(p.frameCount % (this.framesPerSecond * this.secondsPerPlot) === 0){
         this.meteorAngleProbability.plotDistribution(this.meteorAngleProbability.data);
         this.meteorSpeedProbability.plotDistribution(this.meteorSpeedProbability.data);
       }
