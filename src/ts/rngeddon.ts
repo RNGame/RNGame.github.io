@@ -37,19 +37,30 @@ export class RNGeddonController implements GameControllerInterface {
 
     $("#start-game").click(() => {
       $("#start-game").hide();
+      $("#pause-game").show();
       $("#end-game").show();
-      this.isRunning = true;
+      this.gameinstance.loop()
+    });
+    $("#pause-game").click(() => {
+      $("#pause-game").hide();
+      $("#start-game").show();
+      $("#end-game").show();
+      this.gameinstance.noLoop();
     });
 
     $("#end-game").click(() => {
+      $("#end-game").hide();
+      $("#pause-game").hide();
+      $("#start-game").show();
       this.endGame();
     });
   }
+
+  private gameinstance: p5;
   private earthSize = 256;
   private markersize = 20;
 
-  private isRunning = false;
-  private maxEarthLife = 10;
+  private maxEarthLife = 1000;
   private life = 100;
   private isSimulation = false;
 
@@ -107,13 +118,12 @@ export class RNGeddonController implements GameControllerInterface {
   }
 
   private updateLife() {
-    $(".game-life").text(this.life + "%");
+    $(".game-life").text(Number(this.life.toFixed(1)) + "%");
   }
 
   private endGame() {
-    $("#end-game").hide();
-    $("#start-game").show();
-    this.isRunning = false;
+    // this.isRunning = false;
+    this.gameinstance.noLoop()
     this.meteors = new Meteorlist(this.explosionImage);
     this.markers = new Markerlist(this.markercolor);
   }
@@ -134,6 +144,8 @@ export class RNGeddonController implements GameControllerInterface {
     };
 
     p.setup = () => {
+      this.gameinstance = p;
+      p.noLoop();
       p.imageMode(p.CENTER);
       const height = p.windowHeight;
       const width = p.windowWidth;
@@ -156,10 +168,6 @@ export class RNGeddonController implements GameControllerInterface {
     p.draw = () => {
       p.background(0);
       this.earth.draw(p);
-
-      if (!this.isRunning) {
-        return;
-      }
 
       this.player.draw(p);
 
