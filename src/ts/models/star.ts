@@ -28,7 +28,6 @@ export class Star{
             this.counter--;
             this.countup = this.counter <= 0;
         }
-        // console.log(`counter: ${this.counter}`);
 
         let opacity = this.opacity - this.opacity / this.animationlength * this.counter;
 

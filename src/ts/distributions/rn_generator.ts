@@ -48,8 +48,9 @@ export class RandomNumberGenerator {
   
           <div id="diagram-${this.diagramId}" class="diagram"></div>
           <div class="spacer"></div>
-          <div id="diagram-button-${this.diagramId}" class="btn small">Plot</div>
           `)
+          // <div id="diagram-button-${this.diagramId}" class="btn small">Plot</div>
+          
     );
 
     $(`#${parentId}`).prepend(
@@ -160,7 +161,7 @@ export class RandomNumberGenerator {
     }
   }
 
-  private async plotDistribution(angleData: number[]) {
+  async plotDistribution(angleData: number[]) {
     const data: Plotly.Data[] = [
       {
         x: angleData,

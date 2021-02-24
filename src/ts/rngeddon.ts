@@ -212,6 +212,12 @@ export class RNGeddonController implements GameControllerInterface {
       }
       
       this.updateLife();
+
+      //plot new data
+      if(p.frameCount % this.framesPerSecond === 0){
+        this.meteorAngleProbability.plotDistribution(this.meteorAngleProbability.data);
+        this.meteorSpeedProbability.plotDistribution(this.meteorSpeedProbability.data);
+      }
     };
   };
 
