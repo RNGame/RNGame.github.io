@@ -4,13 +4,14 @@ import { GeneratorInput } from "./generator_input";
 import { NormalDistribution } from "./normal";
 import { UniformDistribution } from "./uniform";
 import $ from "jquery";
+import { ExponentialDistribution } from "./exponential";
 
 export class RandomNumberGenerator {
   distribution: Distribution;
 
   distributionSelect: JQuery;
 
-  generators: { mean: GeneratorInput; sd: GeneratorInput; min: GeneratorInput; max: GeneratorInput };
+  generators: { mean: GeneratorInput; sd: GeneratorInput; min: GeneratorInput; max: GeneratorInput, lambda: GeneratorInput};
 
   purpose: string;
   diagramId: string;
@@ -18,7 +19,7 @@ export class RandomNumberGenerator {
   yAxisLabel: string;
 
   data: number[] = [];
-  dataToDegree: boolean
+  dataToDegree: boolean;
 
   private randomNumberGenerator = Math.random;
   private distributionSwitchCallback: (newDist: string) => void;
@@ -28,7 +29,7 @@ export class RandomNumberGenerator {
     purpose: string,
     xAxisLabel: string,
     yAxisLabel: string,
-    generators: { mean: GeneratorInput; sd: GeneratorInput; min: GeneratorInput; max: GeneratorInput },
+    generators: { mean: GeneratorInput; sd: GeneratorInput; min: GeneratorInput; max: GeneratorInput, lambda: GeneratorInput },
     intialDistribution = "normal",
     dataToDegree = false,
     distributionSwitchCallback?: (newDist: string) => void
@@ -51,20 +52,23 @@ export class RandomNumberGenerator {
           `)
     );
 
-    this.distributionSelect = $(`#${parentId}`).prepend(
+    $(`#${parentId}`).prepend(
       $(`
           <select id="dist-${this.diagramId}">
               <option value="normal">Normal distribution</option>
               <option value="uniform">Uniform distribution</option>
+              <option value="exponential">Exponential distribution</option>
           </select>`)
     );
 
-    $(`#${parentId}`).prepend($(`<label for="dist-${this.diagramId}" class="dist">${purpose}</label>`));
+    this.distributionSelect = $(`#dist-${this.diagramId}`);
 
-    this.switchMeteorAngleDistribution(intialDistribution);
+    $(`#${parentId}`).prepend($(`<label for="dist-${this.diagramId}" class="dist">${purpose}</label>`));
 
     const self = this;
     $(() => {
+      self.switchMeteorAngleDistribution(intialDistribution);
+
       $(`#dist-${this.diagramId}`).on("input", (event) => {
         const value = (<HTMLInputElement>event.target).value;
         self.switchMeteorAngleDistribution(value);
@@ -80,7 +84,7 @@ export class RandomNumberGenerator {
     const number = this.distribution.random();
     let diagramNumber = number;
     if (this.dataToDegree) {
-        diagramNumber = number * (180 / Math.PI);
+      diagramNumber = number * (180 / Math.PI);
     }
     this.data.push(diagramNumber);
     return number;
@@ -89,10 +93,12 @@ export class RandomNumberGenerator {
   public reset() {
     this.data = [];
     this.plotDistribution(this.data);
-    this.generators.max.reset()
-    this.generators.min.reset()
-    this.generators.sd.reset()
-    this.generators.mean.reset()
+    /*
+    this.generators.max.reset();
+    this.generators.min.reset();
+    this.generators.sd.reset();
+    this.generators.mean.reset();
+    */
   }
 
   private hashCode(str: string): string {
@@ -110,10 +116,11 @@ export class RandomNumberGenerator {
   private switchMeteorAngleDistribution(distribution: string) {
     switch (distribution) {
       case "uniform":
-        this.generators.min.disabled(false);
+        this.generators.max.disabled(false);
         this.generators.min.disabled(false);
         this.generators.sd.disabled(true);
         this.generators.mean.disabled(true);
+        this.generators.lambda.disabled(true);
         this.distribution = new UniformDistribution(
           this.randomNumberGenerator,
           this.generators.min,
@@ -124,18 +131,32 @@ export class RandomNumberGenerator {
         this.generators.sd.disabled(false);
         this.generators.mean.disabled(false);
         this.generators.min.disabled(true);
-        this.generators.min.disabled(true);
+        this.generators.max.disabled(true);
+        this.generators.lambda.disabled(true);
         this.distribution = new NormalDistribution(
           this.randomNumberGenerator,
           this.generators.mean,
           this.generators.sd
         );
         break;
+      case "exponential":
+        this.generators.sd.disabled(true);
+        this.generators.mean.disabled(true);
+        this.generators.min.disabled(true);
+        this.generators.max.disabled(true);
+        this.generators.lambda.disabled(false);
+        this.distribution = new ExponentialDistribution(
+          this.randomNumberGenerator,
+          this.generators.lambda
+        );
+        break;
     }
+
+    this.distributionSelect.val(distribution);
 
     this.reset();
     if (this.distributionSwitchCallback) {
-        this.distributionSwitchCallback(distribution);
+      this.distributionSwitchCallback(distribution);
     }
   }
 
