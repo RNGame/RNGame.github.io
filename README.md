@@ -103,10 +103,8 @@ If You have not already, you need to install the Node package manager. You can g
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
+Presentation Video (in german)
+[![Watch the Presentation Now][presentation-screenshot]](https://drive.google.com/file/d/10KdPyUA8DFna4NpWuw0gbUs4MWzryxmH/view)
 
 <!-- CONTACT -->
 ## Contact
@@ -132,4 +130,5 @@ Project Link: [github.com/RNGame/RNGame.github.io](https://github.com/RNGame/RNG
 <!-- MARKDOWN LINKS & IMAGES -->
 [rngame-screenshot]: readme_src/rngame_screenshot.PNG
 [rngeddon-screenshot]: readme_src/rngeddon_screenshot.PNG
+[presentation-screenshot]: readme_src/presentation_screenshot.PNG
 [bruce_willis]: readme_src/bruce_willis.jpg
