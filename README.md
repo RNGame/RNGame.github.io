@@ -65,7 +65,7 @@ The game **RNGeddon** is a game where the earth is endangered by an ever increas
   * [gaussian distribution](https://en.wikipedia.org/wiki/Normal_distribution)
   * [exponential distribution](https://en.wikipedia.org/wiki/Exponential_distribution)
   * [uniform distribution](https://en.wikipedia.org/wiki/Continuous_uniform_distribution)
-<br />
+
 The name **RNGeddon** is an homage to the outstanding movie **Armageddon**, where an oil drilling expert played by Bruce Willis and his crew of oil drillers go on to become astronauts and save the world from an asteroid in an heroic feat of self sacrifice.
 
 [![RNGeddon Screen Shot][rngeddon-screenshot]](https://rngame.github.io/rngeddon.html)
