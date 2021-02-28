@@ -8,7 +8,7 @@
   <h3 align="center">RNGame</h3>
 
   <p align="center">
-    This is a team project
+    An interactive Random Number Generator visualization
     <br />
     <a href="https://github.com/RNGame/RNGame.github.io/wiki"><strong>Explore the Wiki »</strong></a>
     <br />
