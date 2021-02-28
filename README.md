@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/RNGame/RNGame.github.io">
+  <a href="https://github.com/RNGame/RNGame.github.io/blob/main">
     <img src="readme_src/rngesus.jpg" alt="Logo" width="80" height="80">
   </a>
 
