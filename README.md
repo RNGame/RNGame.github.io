@@ -1,14 +1,14 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/RNGame/RNGame.github.io">
-    <img src="readme_src/rngesus.png" alt="Logo" width="100" height="100">
+  <a href="https://rngame.github.io/">
+    <img src="readme_src/rngesus.png" alt="Logo" width="150" height="150">
   </a>
 
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">RNGame</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    This is a team project
     <br />
     <a href="https://github.com/RNGame/RNGame.github.io/wiki"><strong>Explore the Wiki »</strong></a>
     <br />
@@ -54,7 +54,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![RNGame Screen Shot][rngame-screenshot]](https://rngame.github.io/)
 
 There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
 
@@ -186,3 +186,4 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: images/screenshot.png
+[rngame-screenshot]: readme_src/rngame_screenshot.PNG
