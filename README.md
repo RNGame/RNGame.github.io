@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/RNGame/RNGame.github.io">
-    <img src="readme_src/rngesus.jpg" alt="Logo" width="100" height="100">
+    <img src="readme_src/rngesus.png" alt="Logo" width="100" height="100">
   </a>
 
   <h3 align="center">Best-README-Template</h3>
