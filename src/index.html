@@ -9,31 +9,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/p5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.21/dist/vanta.topology.min.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Audiowide&family=Source+Sans+Pro&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="main-menu" id="main-menu">
       <div class="button-container">
         <h1>Random Number Games</h1>
         <a class="btn" href="/rngeddon.html">Play RNGeddon</a>
+        <a class="btn github-btn" href="https://github.com/RNGame/RNGame.github.io">
+          <img class="github" src="/res/github.svg" alt="GitHub" />
+          <span>GitHub</span>
+        </a>
       </div>
     </div>
   </body>
   <footer>
+    
     <script>
-        VANTA.TOPOLOGY({
-          el: "#main-menu",
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minWidth: window.innerWidth,
-          minHeight: window.innerHeight,
-          scale: 1.0,
-          scaleMobile: 1.0,
-          color: 0xffffff,
-          backgroundColor: 0x0,
-        });
-      </script>
+      VANTA.TOPOLOGY({
+        el: "#main-menu",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minWidth: window.innerWidth,
+        minHeight: window.innerHeight,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: 0xffffff,
+        backgroundColor: 0x0,
+      });
+    </script>
   </footer>
 </html>
