@@ -189,6 +189,12 @@ export class RNGeddonController implements GameControllerInterface {
       //draw meteors
       this.meteors.draw(p);
 
+      //plot new data
+      if(p.frameCount % (this.framesPerSecond * this.secondsPerPlot) === 0){
+        this.meteorAngleProbability.plotDistribution(this.meteorAngleProbability.data);
+        this.meteorSpeedProbability.plotDistribution(this.meteorSpeedProbability.data);
+      }
+
       if (this.isSimulation) {
         return;
       }
@@ -205,12 +211,6 @@ export class RNGeddonController implements GameControllerInterface {
       }
       
       this.updateLife();
-
-      //plot new data
-      if(p.frameCount % (this.framesPerSecond * this.secondsPerPlot) === 0){
-        this.meteorAngleProbability.plotDistribution(this.meteorAngleProbability.data);
-        this.meteorSpeedProbability.plotDistribution(this.meteorSpeedProbability.data);
-      }
     };
   };
 
