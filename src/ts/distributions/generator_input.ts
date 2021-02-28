@@ -29,7 +29,7 @@ export class SliderInput implements GeneratorInput {
     this.sliderId = this.hashCode(sliderName + parentId);
     this.parentId = parentId;
     this.initial = initial;
-    this.currentValue = this.initial;
+    this.currentValue = Number(this.initial.toFixed(2));
 
     if ($("#" + parentId).length === 0) {
       throw new Error("DOM Element with " + parentId + " does not exist.");
@@ -60,7 +60,7 @@ export class SliderInput implements GeneratorInput {
   }
 
   reset(): void {
-    this.currentValue = this.initial;
+    this.currentValue = Number(this.initial.toFixed(2));
     this.sliderElement.val(this.currentValue);
     this.sliderLabel.text(this.currentValue);
   }

@@ -126,6 +126,7 @@ export class RNGeddonController implements GameControllerInterface {
     this.meteorSpeedProbability.reset();
     this.meteors = new Meteorlist(this.explosionImage);
     this.markers = new Markerlist(this.markercolor);
+    this.gameinstance.redraw();
   }
 
   private sketch = (p: p5) => {
