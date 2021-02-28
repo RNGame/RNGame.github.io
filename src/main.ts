@@ -10,8 +10,8 @@ import "./style/main.scss";
 import $ from 'jquery';
 import { RNGeddonController } from "./ts/rngeddon";
 
-const rngeddon = new RNGeddonController()
 
 if ($('#game-rngeddon').length) {
+  const rngeddon = new RNGeddonController()
   new p5(rngeddon.game())
 }

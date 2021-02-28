@@ -54,7 +54,18 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![RNGame Screen Shot][rngame-screenshot]]([game-link])
+[![RNGame Screen Shot][rngame-screenshot]](https://rngame.github.io/)
+
+This project was developed by [Benjamin Jasper](https://github.com/benjasper) and [Marvin Rudolph](https://github.com/MRudi95) as part of their education at the [HTWG Konstanz](https://www.htwg-konstanz.de/).
+<br />
+The goal was to visualize different random number generators and distributions in an interactive and engaging way >> as a Game.
+<br />
+<br />
+The game **RNGeddon** is a game where the earth is endangered by an ever increasing number of meteors, that the player has to destroy to protect the earth. The direction and speed of these meteors can be controlled with different random number generators such as the [gaussian distribution](https://en.wikipedia.org/wiki/Normal_distribution) or the [uniform distribution](https://en.wikipedia.org/wiki/Continuous_uniform_distribution).
+<br />
+The name **RNGeddon** is an homage to the outstanding movie **Armageddon**, where an oil drilling expert played by Bruce Willis and his crew of oil drillers go on to become astronauts and save the world from an asteroid in an heroic feat of self sacrifice.
+
+[![RNGeddon Screen Shot][rngeddon-screenshot]](https://rngame.github.io/rngeddon.html)
 
 There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
 
@@ -187,5 +198,5 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: images/screenshot.png
 
-[game-link]: https://rngame.github.io/
-[rngame-screenshot]: readme_src/rngame_screenshot.png
+[rngame-screenshot]: readme_src/rngame_screenshot.PNG
+[rngeddon-screenshot]: readme_src/rngeddon_screenshot.PNG
