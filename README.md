@@ -69,17 +69,14 @@ The name **RNGeddon** is an homage to the outstanding movie **Armageddon**, wher
 
 ### Built With
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 * [Typescript](https://www.typescriptlang.org/)
 * [p5.js](https://p5js.org/)
+* [plotly.js](https://plotly.com/)
 * [jQuery](https://jquery.com/)
 * [webpack](https://webpack.js.org/)
 
 <!-- GETTING STARTED -->
 ## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
@@ -128,20 +125,11 @@ Project Link: [github.com/RNGame/RNGame.github.io](https://github.com/RNGame/RNG
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Img Shields](https://shields.io)
-* [Choose an Open Source License](https://choosealicense.com)
 * [GitHub Pages](https://pages.github.com)
-* [Animate.css](https://daneden.github.io/animate.css)
-* [Loaders.css](https://connoratherton.com/loaders)
-* [Slick Carousel](https://kenwheeler.github.io/slick)
-* [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll)
-* [Sticky Kit](http://leafo.net/sticky-kit)
-* [JVectorMap](http://jvectormap.com)
-* [Font Awesome](https://fontawesome.com)
-
-
+* [Prob.js](https://bramp.github.io/prob.js/)
+* [Vanta.js](https://www.vantajs.com/)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [rngame-screenshot]: readme_src/rngame_screenshot.PNG
 [rngeddon-screenshot]: readme_src/rngeddon_screenshot.PNG
+[bruce_willis]: readme_src/bruce_willis.jpg
