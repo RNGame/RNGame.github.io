@@ -61,7 +61,12 @@ This project was developed by [Benjamin Jasper](https://github.com/benjasper) an
 The goal was to visualize different random number generators and distributions in an interactive and engaging way >> as a Game.
 <br />
 <br />
-The game **RNGeddon** is a game where the earth is endangered by an ever increasing number of meteors, that the player has to destroy to protect the earth. The direction and speed of these meteors can be controlled with different random number generators such as the [gaussian distribution](https://en.wikipedia.org/wiki/Normal_distribution) or the [uniform distribution](https://en.wikipedia.org/wiki/Continuous_uniform_distribution).
+The game **RNGeddon** is a game where the earth is endangered by an ever increasing number of meteors, that the player has to destroy to protect the earth. The direction and speed of these meteors can be controlled with different random number generators such as the 
+<ul>
+  <li>[gaussian distribution](https://en.wikipedia.org/wiki/Normal_distribution)</li>
+  <li>[exponential distribution](https://en.wikipedia.org/wiki/Exponential_distribution)</li>
+  <li>[uniform distribution](https://en.wikipedia.org/wiki/Continuous_uniform_distribution)</li>
+</ul>
 <br />
 The name **RNGeddon** is an homage to the outstanding movie **Armageddon**, where an oil drilling expert played by Bruce Willis and his crew of oil drillers go on to become astronauts and save the world from an asteroid in an heroic feat of self sacrifice.
 
