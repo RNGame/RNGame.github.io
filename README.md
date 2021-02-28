@@ -1,8 +1,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/RNGame/RNGame.github.io/blob/main">
-    <img src="readme_src/rngesus.jpg" alt="Logo" width="80" height="80">
+  <a href="https://github.com/RNGame/RNGame.github.io">
+    <img src="/blob/main/readme_src/rngesus.jpg" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Best-README-Template</h3>
