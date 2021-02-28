@@ -72,6 +72,7 @@ The name **RNGeddon** is an homage to the outstanding movie **Armageddon**, wher
 This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 * [Typescript](https://www.typescriptlang.org/)
 * [p5.js](https://p5js.org/)
+* [plotly.js](https://plotly.com/)
 * [jQuery](https://jquery.com/)
 * [webpack](https://webpack.js.org/)
 
@@ -128,11 +129,11 @@ Project Link: [github.com/RNGame/RNGame.github.io](https://github.com/RNGame/RNG
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-* [p5.js](https://p5js.org/)
-* [plotly.js](https://plotly.com/)
-* [vanta.js](https://www.vantajs.com/)
 * [GitHub Pages](https://pages.github.com)
+* [Prob.js](https://bramp.github.io/prob.js/)
+* [Vanta.js](https://www.vantajs.com/)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [rngame-screenshot]: readme_src/rngame_screenshot.PNG
 [rngeddon-screenshot]: readme_src/rngeddon_screenshot.PNG
+[bruce_willis]: readme_src/bruce_willis.jpg
