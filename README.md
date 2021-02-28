@@ -69,7 +69,6 @@ The name **RNGeddon** is an homage to the outstanding movie **Armageddon**, wher
 
 ### Built With
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 * [Typescript](https://www.typescriptlang.org/)
 * [p5.js](https://p5js.org/)
 * [plotly.js](https://plotly.com/)
@@ -78,9 +77,6 @@ This section should list any major frameworks that you built your project using.
 
 <!-- GETTING STARTED -->
 ## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
