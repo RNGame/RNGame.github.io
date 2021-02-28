@@ -50,7 +50,7 @@ export class RNGeddonController implements GameControllerInterface {
   private earthSize = 256;
   private markersize = 20;
 
-  private maxEarthLife = 1000;
+  private maxEarthLife = 100;
   private life = 100;
   private isSimulation = false;
 
