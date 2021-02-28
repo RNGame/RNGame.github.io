@@ -54,7 +54,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![RNGame Screen Shot][rngame-screenshot]]([game-link])
+[![RNGame Screen Shot][rngame-screenshot]](https://rngame.github.io/)
 
 There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
 
@@ -186,6 +186,4 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: images/screenshot.png
-
-[game-link]: https://rngame.github.io/
-[rngame-screenshot]: readme_src/rngame_screenshot.png
+[rngame-screenshot]: readme_src/rngame_screenshot.PNG
