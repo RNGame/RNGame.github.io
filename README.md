@@ -115,6 +115,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 ## Contact
 
 Benjamin Jasper - [github](https://github.com/benjasper) - benjamin.jasper@htwg-konstanz.de
+<br />
 Marvin Rudolph - [github](https://github.com/MRudi95) - marvin.rudolph@htwg-konstanz.de
 
 Project Tutor:
