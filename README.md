@@ -5,10 +5,10 @@
     <img src="readme_src/rngesus.png" alt="Logo" width="100" height="100">
   </a>
 
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">RNGame</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    This is a team project
     <br />
     <a href="https://github.com/RNGame/RNGame.github.io/wiki"><strong>Explore the Wiki »</strong></a>
     <br />
