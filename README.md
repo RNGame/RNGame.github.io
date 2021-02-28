@@ -128,19 +128,10 @@ Project Link: [github.com/RNGame/RNGame.github.io](https://github.com/RNGame/RNG
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Img Shields](https://shields.io)
-* [Choose an Open Source License](https://choosealicense.com)
+* [p5.js](https://p5js.org/)
+* [plotly.js](https://plotly.com/)
+* [vanta.js](https://www.vantajs.com/)
 * [GitHub Pages](https://pages.github.com)
-* [Animate.css](https://daneden.github.io/animate.css)
-* [Loaders.css](https://connoratherton.com/loaders)
-* [Slick Carousel](https://kenwheeler.github.io/slick)
-* [Smooth Scroll](https://github.com/cferdinandi/smooth-scroll)
-* [Sticky Kit](http://leafo.net/sticky-kit)
-* [JVectorMap](http://jvectormap.com)
-* [Font Awesome](https://fontawesome.com)
-
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [rngame-screenshot]: readme_src/rngame_screenshot.PNG
